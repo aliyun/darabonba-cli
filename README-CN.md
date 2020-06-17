@@ -1,4 +1,4 @@
-English | [简体中文](/README-CN.md)
+[English](/README.md) | 简体中文
 
 # Darabonba CLI
 
@@ -19,15 +19,15 @@ English | [简体中文](/README-CN.md)
 [download-image]: https://img.shields.io/npm/dm/@darabonba/cli.svg?style=flat-square
 [download-url]: https://npmjs.org/package/@darabonba/cli
 
-## Installation
+## 安装
 
-Darabonba CLI was designed to work in Node.js. The preferred way to install the Generator is to use the [NPM](https://www.npmjs.com/) package manager. Simply type the following into a terminal window:
+Darabonba CLI只能在 Node.js 环境下运行。建议使用 [NPM](https://www.npmjs.com/) 包管理工具安装。在终端输入以下命令进行安装:
 
 ```sh
 $ npm install @darabonba/cli -g
 ```
 
-## Usage
+## 使用示例
 
 ```sh
 $ dara
@@ -55,15 +55,15 @@ help commands
 
 ```
 
-## Issues
+## 问题反馈
 
-[Opening an Issue](https://github.com/aliyun/darabonba-cli/issues/new/choose), Issues not conforming to the guidelines may be closed immediately.
+[提出问题](https://github.com/aliyun/darabonba-cli/issues/new/choose), 不符合指南的问题可能会立即关闭。
 
-## Changelog
+## 发布日志
 
-Detailed changes for each release are documented in the [release notes](/CHANGELOG.md).
+发布详情会更新在 [release notes](/CHANGELOG.md) 文件中
 
-## License
+## 许可证
 
 [Apache-2.0](/LICENSE)
 Copyright (c) 2009-present, Alibaba Cloud All rights reserved.
