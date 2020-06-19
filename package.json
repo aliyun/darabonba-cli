@@ -23,6 +23,7 @@
     "@darabonba/java-generator": "^1",
     "@darabonba/php-generator": "^1",
     "@darabonba/typescript-generator": "^1",
+    "@darabonba/python-generator": "^1",
     "@types/node": "^12.7.2",
     "debug": "^4.1.1",
     "koa": "^2.10.0",
