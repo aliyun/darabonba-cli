@@ -1,0 +1,7 @@
+{
+  "name": "interface",
+  "version": "1.0.0",
+  "scope": "darabonba",
+  "main": "./main.dara",
+  "mode": "interface"
+}

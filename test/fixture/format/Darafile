@@ -1,0 +1,10 @@
+{
+  "name": "complex",
+  "version": "1.0.0",
+  "scope": "darabonba",
+  "main": "./complex.dara",
+  "libraries": {
+    "Util": "darabonba:Util:*",
+    "Credential": "darabonba:Credential:*"
+  }
+}

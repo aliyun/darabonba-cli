@@ -1,0 +1,27 @@
+/**
+ * tea assert module
+ */
+/**
+  * Judge the expect result is equal to the actual result
+  * @param expect the expect result
+  * @param actual the actual result
+  * @param message the message which the assertion error is thrown with
+  * @return void
+  */
+static function equal(expect: any, actual: any, message: string): void;
+
+/**
+  * Judge the expect result is equal to the actual result in deep and strict way
+  * @param expect the expect result
+  * @param actual the actual result
+  * @param message the message which the assertion error is thrown with
+  * @return void
+  */
+static function eql(expect: any, actual: any, message: string): void;
+
+/**
+  * throw assertion error with the message
+  * @param message message the message which the assertion error is thrown with
+  * @return void
+  */
+static function fail(message: string): void;

@@ -1,0 +1,8 @@
+static function helloMap(): map[string]string {
+  var m: map[string]string = {};
+  return {
+    key = 'value',
+    key-1 = 'value-1',
+    ...m,
+  };
+}

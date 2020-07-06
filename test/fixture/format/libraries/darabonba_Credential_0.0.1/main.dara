@@ -1,0 +1,27 @@
+model Config {
+  accessKeyId?: string,
+  accessKeySecret?: string,
+  securityToken?: string,
+  bearerToken?: string,
+  durationSeconds?: number,
+  roleArn?: string,
+  policy?: string,
+  roleSessionExpiration?: number,
+  roleSessionName?: string,
+  publicKeyId?: string,
+  privateKeyFile?: string,
+  roleName?: string,
+  type?: string
+}
+
+init(config: Config);
+
+async function getAccessKeyId(): string;
+
+async function getAccessKeySecret(): string;
+
+async function getSecurityToken(): string;
+
+function getBearerToken(): string;
+
+function getType(): string;

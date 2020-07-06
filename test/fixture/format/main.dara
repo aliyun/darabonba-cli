@@ -1,0 +1,29 @@
+/**
+ * This is example module
+ */
+
+/**
+ * The example model
+ */
+model example {
+  key_1: [ string ],
+  key_2: {
+    sub_key: boolean
+  }
+}
+
+/**
+ * The example function
+ * @param words the words description
+ * @param times the times description
+ * @return the final content
+ */
+static function hello(words: string, times: number): map[string]string {
+  var m: map[string]string = { };
+  return {
+    key = 'value',
+    key-1 = 'value-1',
+    ...m
+  };
+}
+

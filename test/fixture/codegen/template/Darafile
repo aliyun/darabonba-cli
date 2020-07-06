@@ -1,0 +1,15 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "scope": "darabonba",
+  "main": "./main.dara",
+  "java": {
+    "package": "com.darabonba.test"
+  },
+  "csharp": {
+    "namespace": "Darabonba.Test"
+  },
+  "php": {
+    "package": "Darabonba.Test"
+  }
+}

@@ -1,7 +1,7 @@
 node_modules/
 .nyc_output/
 coverage/
-build/
+test/output/
 .DS_store
 Teafile
 Darafile

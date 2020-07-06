@@ -1,0 +1,5 @@
+{
+  "darabonba:Util:*": "libraries/darabonba_Util_0.0.1",
+  "darabonba:Credential:*": "libraries/darabonba_Credential_0.0.1",
+  "darabonba:Assert:*": "libraries/darabonba_Assert_0.0.1"
+}

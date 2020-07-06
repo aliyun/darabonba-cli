@@ -1,0 +1,175 @@
+{
+  "imports": [],
+  "type": "module",
+  "moduleBody": {
+    "type": "moduleBody",
+    "nodes": [
+      {
+        "type": "model",
+        "modelName": {
+          "tag": 2,
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 7
+            },
+            "end": {
+              "line": 1,
+              "column": 16
+            }
+          },
+          "lexeme": "testModel",
+          "index": 2
+        },
+        "modelBody": {
+          "type": "modelBody",
+          "nodes": [
+            {
+              "type": "modelField",
+              "fieldName": {
+                "tag": 2,
+                "loc": {
+                  "start": {
+                    "line": 2,
+                    "column": 5
+                  },
+                  "end": {
+                    "line": 2,
+                    "column": 10
+                  }
+                },
+                "lexeme": "hello",
+                "index": 4
+              },
+              "required": true,
+              "fieldValue": {
+                "type": "fieldType",
+                "fieldType": "string"
+              },
+              "attrs": [],
+              "tokenRange": [
+                4,
+                7
+              ]
+            },
+            {
+              "type": "modelField",
+              "fieldName": {
+                "tag": 2,
+                "loc": {
+                  "start": {
+                    "line": 3,
+                    "column": 5
+                  },
+                  "end": {
+                    "line": 3,
+                    "column": 10
+                  }
+                },
+                "lexeme": "world",
+                "index": 8
+              },
+              "required": true,
+              "fieldValue": {
+                "type": "fieldType",
+                "fieldType": "string"
+              },
+              "attrs": [],
+              "tokenRange": [
+                8,
+                11
+              ]
+            }
+          ],
+          "tokenRange": [
+            3,
+            12
+          ]
+        },
+        "tokenRange": [
+          1,
+          12
+        ]
+      }
+    ]
+  },
+  "comments": {},
+  "models": {
+    "testModel": {
+      "type": "model",
+      "modelName": {
+        "tag": 2,
+        "lexeme": "testModel"
+      },
+      "modelBody": {
+        "type": "modelBody",
+        "nodes": [
+          {
+            "type": "modelField",
+            "fieldName": {
+              "tag": 2,
+              "loc": {
+                "start": {
+                  "line": 2,
+                  "column": 5
+                },
+                "end": {
+                  "line": 2,
+                  "column": 10
+                }
+              },
+              "lexeme": "hello",
+              "index": 4
+            },
+            "required": true,
+            "fieldValue": {
+              "type": "fieldType",
+              "fieldType": "string"
+            },
+            "attrs": [],
+            "tokenRange": [
+              4,
+              7
+            ]
+          },
+          {
+            "type": "modelField",
+            "fieldName": {
+              "tag": 2,
+              "loc": {
+                "start": {
+                  "line": 3,
+                  "column": 5
+                },
+                "end": {
+                  "line": 3,
+                  "column": 10
+                }
+              },
+              "lexeme": "world",
+              "index": 8
+            },
+            "required": true,
+            "fieldValue": {
+              "type": "fieldType",
+              "fieldType": "string"
+            },
+            "attrs": [],
+            "tokenRange": [
+              8,
+              11
+            ]
+          }
+        ],
+        "tokenRange": [
+          3,
+          12
+        ]
+      }
+    }
+  },
+  "usedExternModel": {},
+  "conflictModels": {},
+  "usedTypes": {},
+  "parserVersion": "1.1.0"
+}

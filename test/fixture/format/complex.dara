@@ -1,0 +1,240 @@
+/**
+ * This is a SDK 
+ */
+
+import Util;
+import Credential;
+
+type @endpoint = string
+type @regionId = string
+type @protocol = string
+type @userAgent = string
+type @endpointRule = string
+type @endpointMap = map[string]string
+type @suffix = string
+type @readTimeout = number
+type @connectTimeout = number
+type @httpProxy = string
+type @httpsProxy = string
+type @socks5Proxy = string
+type @socks5NetWork = string
+type @noProxy = string
+type @network = string
+type @productId = string
+type @maxIdleConns = number
+type @endpointType = string
+type @openPlatformEndpoint = string
+type @credential = Credential
+
+/**
+ * Model for initing client
+ */
+model Config {
+  accessKeyId?: string(description='accesskey id', default=''),
+  accessKeySecret?: string(description='accesskey secret', default=''),
+  securityToken?: string(description='security token', example='a.txt', default=''),
+  protocol?: string(description='http protocol', example='http', default='http'),
+  regionId?: string(description='region id', example='cn-hangzhou', default=''),
+  readTimeout?: number(description='read timeout', example='10', default=''),
+  connectTimeout?: number(description='connect timeout', example='10', default=''),
+  httpProxy?: string(description='http proxy', example='http://localhost', default=''),
+  httpsProxy?: string(description='https proxy', example='https://localhost', default=''),
+  credential?: Credential(description='credential', example='', default=''),
+  endpoint?: string(description='endpoint', example='cs.aliyuncs.com', default=''),
+  noProxy?: string(description='proxy white list', example='http://localhost', default=''),
+  maxIdleConns?: number(description='max idle conns', example='3', default=''),
+  network?: string(description='network for endpoint', example='public', default=''),
+  userAgent?: string(description='user agent', example='Alibabacloud/1', default=''),
+  suffix?: string(description='suffix for endpoint', example='aliyun', default=''),
+  socks5Proxy?: string(description='socks5 proxy', default=''),
+  socks5NetWork?: string(description='socks5 network', example='TCP', default=''),
+  endpointType?: string(description='endpoint type', example='internal', default=''),
+  openPlatformEndpoint?: string(description='OpenPlatform endpoint', example='openplatform.aliyuncs.com', default=''),
+  type?: string(description='credential type', example='access_key', default='', deprecated=true)
+}
+
+/**
+ * Init client with Config
+ * @param config config contains the necessary information to create a client
+ */
+init(config: Config) {
+  if (Util.isUnset(config)) {
+    throw {
+      code = 'ParameterMissing',
+      message = '\'config\' can not be unset'
+    };
+  }
+
+  if (!Util.empty(config.accessKeyId) && !Util.empty(config.accessKeySecret)) {
+    if (!Util.empty(config.securityToken)) {
+      config.type = 'sts';
+    }
+    var credentialConfig = new Credential.Config{
+      accessKeyId = config.accessKeyId,
+      type = config.type,
+      accessKeySecret = config.accessKeySecret,
+      securityToken = config.securityToken
+    };
+    @credential = new Credential(credentialConfig);
+  }
+  @network = config.network;
+  @suffix = config.suffix;
+  @endpoint = config.endpoint;
+  @protocol = config.protocol;
+  @regionId = config.regionId;
+  @userAgent = config.userAgent;
+  @readTimeout = config.readTimeout;
+  @connectTimeout = config.connectTimeout;
+  @httpProxy = config.httpProxy;
+  @httpsProxy = config.httpsProxy;
+  @noProxy = config.noProxy;
+  @socks5Proxy = config.socks5Proxy;
+  @socks5NetWork = config.socks5NetWork;
+  @maxIdleConns = config.maxIdleConns;
+  @endpointType = config.endpointType;
+  @openPlatformEndpoint = config.openPlatformEndpoint;
+}
+
+/**
+ * Encapsulate the request and invoke the network
+ * @param action api name
+ * @param protocol http or https
+ * @param method e.g. GET
+ * @param version product version
+ * @param authType when authType is Anonymous, the signature will not be calculate
+ * @param pathname pathname of every api
+ * @param query which contains request params
+ * @param body content of request
+ * @param runtime which controls some details of call api, such as retry times
+ * @return the response
+ */
+api doRequest(action: string, protocol: string, method: string, version: string, authType: string, query: object, body: object, runtime: Util.RuntimeOptions): object {
+  __request.protocol = Util.defaultString(@protocol, protocol);
+  __request.method = method;
+  __request.pathname = '/';
+  __request.query = Util.query({
+    Action = action,
+    Format = 'json',
+    Timestamp = Util.getTimestamp(),
+    Version = version,
+    SignatureNonce = Util.getNonce(),
+    ...query
+  });
+  // endpoint is setted in product client
+  __request.headers = {
+    host = @endpoint,
+    user-agent = getUserAgent()
+  };
+
+  if (!Util.isUnset(body)) {
+    var tmp = Util.anyifyMapValue(Util.query(body));
+    __request.body = Util.toFormString(tmp);
+    __request.headers.content-type = 'application/x-www-form-urlencoded';
+  }
+
+  if (!Util.equalString(authType, 'Anonymous')) {
+    var accessKeyId = getAccessKeyId();
+    var accessKeySecret = getAccessKeySecret();
+    var securityToken = getSecurityToken();
+
+    if (!Util.empty(securityToken)) {
+      __request.query.SecurityToken = securityToken;
+    }
+    __request.query.SignatureMethod = 'HMAC-SHA1';
+    __request.query.SignatureVersion = '1.0';
+    __request.query.AccessKeyId = accessKeyId;
+    var signedParam = {
+      ...__request.query,
+      ...Util.query(body)
+    };
+    __request.query.Signature = Util.getSignatureV1(signedParam, __request.method, accessKeySecret);
+  }
+} returns {
+  var obj = Util.readAsJSON(__response.body);
+  var res = Util.assertAsMap(obj);
+
+  if (Util.is4xx(__response.statusCode) || Util.is5xx(__response.statusCode)) {
+    throw {
+      message = res.Message,
+      data = res,
+      code = res.Code
+    };
+  }
+  return res;
+} runtime {
+  timeouted = 'retry',
+  readTimeout = Util.defaultNumber(runtime.readTimeout, @readTimeout),
+  connectTimeout = Util.defaultNumber(runtime.connectTimeout, @connectTimeout),
+  httpProxy = Util.defaultString(runtime.httpProxy, @httpProxy),
+  httpsProxy = Util.defaultString(runtime.httpsProxy, @httpsProxy),
+  noProxy = Util.defaultString(runtime.noProxy, @noProxy),
+  maxIdleConns = Util.defaultNumber(runtime.maxIdleConns, @maxIdleConns),
+  retry = {
+    retryable = runtime.autoretry,
+    maxAttempts = Util.defaultNumber(runtime.maxAttempts, 3)
+  },
+  backoff = {
+    policy = Util.defaultString(runtime.backoffPolicy, 'no'),
+    period = Util.defaultNumber(runtime.backoffPeriod, 1)
+  },
+  ignoreSSL = runtime.ignoreSSL
+}
+
+/**
+ * Get user agent
+ * @return user agent
+ */
+function getUserAgent(): string {
+  var userAgent = Util.getUserAgent(@userAgent);
+  return userAgent;
+}
+
+/**
+ * Get accesskey id by using credential
+ * @return accesskey id
+ */
+async function getAccessKeyId(): string {
+  if (Util.isUnset(@credential)) {
+    return '';
+  }
+  var accessKeyId = @credential.getAccessKeyId();
+  return accessKeyId;
+}
+
+/**
+ * Get accesskey secret by using credential
+ * @return accesskey secret
+ */
+async function getAccessKeySecret(): string {
+  if (Util.isUnset(@credential)) {
+    return '';
+  }
+  var secret = @credential.getAccessKeySecret();
+  return secret;
+}
+
+/**
+ * Get security token by using credential
+ * @return security token
+ */
+async function getSecurityToken(): string {
+  if (Util.isUnset(@credential)) {
+    return '';
+  }
+  var token = @credential.getSecurityToken();
+  return token;
+}
+
+/**
+ * If the endpointRule and config.endpoint are empty, throw error
+ * @param config config contains the necessary information to create a client
+ */
+function checkConfig(config: Config)throws : void {
+  if (Util.empty(@endpointRule) && Util.empty(config.endpoint)) {
+    throw {
+      code = 'ParameterMissing',
+      message = '\'config.endpoint\' can not be empty'
+    };
+  }
+}
+
