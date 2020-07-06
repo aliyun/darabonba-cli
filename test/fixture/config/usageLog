@@ -1,0 +1,14 @@
+
+[31m  Required argument : action   
+[0m
+[33m
+Usage:
+[0m
+    dara config set <key> <value>
+    dara config get [<key>]
+    dara config delete <key>
+    dara config edit
+    dara config list
+    dara config ls
+    dara config [action] -c <configFilePath>
+

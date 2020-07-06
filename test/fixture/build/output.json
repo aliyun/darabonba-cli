@@ -1,0 +1,422 @@
+{
+  "imports": [],
+  "type": "module",
+  "moduleBody": {
+    "type": "moduleBody",
+    "nodes": [
+      {
+        "type": "function",
+        "isStatic": true,
+        "isAsync": false,
+        "hasThrow": false,
+        "functionName": {
+          "tag": 2,
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 17
+            },
+            "end": {
+              "line": 1,
+              "column": 25
+            }
+          },
+          "lexeme": "helloMap",
+          "index": 3
+        },
+        "params": {
+          "type": "params",
+          "params": []
+        },
+        "returnType": {
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 29
+            },
+            "end": {
+              "line": 1,
+              "column": 46
+            }
+          },
+          "type": "map",
+          "keyType": {
+            "tag": 8,
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 33
+              },
+              "end": {
+                "line": 1,
+                "column": 39
+              }
+            },
+            "lexeme": "string",
+            "index": 9
+          },
+          "valueType": {
+            "tag": 8,
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 40
+              },
+              "end": {
+                "line": 1,
+                "column": 46
+              }
+            },
+            "lexeme": "string",
+            "index": 11
+          }
+        },
+        "functionBody": {
+          "type": "functionBody",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 47
+            },
+            "end": {
+              "line": 8,
+              "column": 2
+            }
+          },
+          "stmts": {
+            "type": "stmts",
+            "stmts": [
+              {
+                "type": "declare",
+                "id": {
+                  "tag": 2,
+                  "loc": {
+                    "start": {
+                      "line": 2,
+                      "column": 7
+                    },
+                    "end": {
+                      "line": 2,
+                      "column": 8
+                    }
+                  },
+                  "lexeme": "m",
+                  "index": 14
+                },
+                "expr": {
+                  "type": "object",
+                  "fields": [],
+                  "loc": {
+                    "start": {
+                      "line": 2,
+                      "column": 30
+                    },
+                    "end": {
+                      "line": 2,
+                      "column": 32
+                    }
+                  },
+                  "tokenRange": [
+                    22,
+                    24
+                  ],
+                  "inferred": {
+                    "type": "map",
+                    "keyType": {
+                      "type": "basic",
+                      "name": "string"
+                    },
+                    "valueType": {
+                      "type": "basic",
+                      "name": "string"
+                    }
+                  }
+                },
+                "expectedType": {
+                  "loc": {
+                    "start": {
+                      "line": 2,
+                      "column": 10
+                    },
+                    "end": {
+                      "line": 2,
+                      "column": 27
+                    }
+                  },
+                  "type": "map",
+                  "keyType": {
+                    "tag": 8,
+                    "loc": {
+                      "start": {
+                        "line": 2,
+                        "column": 14
+                      },
+                      "end": {
+                        "line": 2,
+                        "column": 20
+                      }
+                    },
+                    "lexeme": "string",
+                    "index": 18
+                  },
+                  "valueType": {
+                    "tag": 8,
+                    "loc": {
+                      "start": {
+                        "line": 2,
+                        "column": 21
+                      },
+                      "end": {
+                        "line": 2,
+                        "column": 27
+                      }
+                    },
+                    "lexeme": "string",
+                    "index": 20
+                  }
+                },
+                "tokenRange": [
+                  13,
+                  24
+                ]
+              },
+              {
+                "type": "return",
+                "expr": {
+                  "type": "object",
+                  "fields": [
+                    {
+                      "type": "objectField",
+                      "fieldName": {
+                        "tag": 2,
+                        "loc": {
+                          "start": {
+                            "line": 4,
+                            "column": 5
+                          },
+                          "end": {
+                            "line": 4,
+                            "column": 8
+                          }
+                        },
+                        "lexeme": "key",
+                        "index": 27
+                      },
+                      "expr": {
+                        "type": "string",
+                        "value": {
+                          "tag": 1,
+                          "loc": {
+                            "start": {
+                              "line": 4,
+                              "column": 12
+                            },
+                            "end": {
+                              "line": 4,
+                              "column": 17
+                            }
+                          },
+                          "string": "value",
+                          "index": 29
+                        },
+                        "loc": {
+                          "start": {
+                            "line": 4,
+                            "column": 12
+                          },
+                          "end": {
+                            "line": 4,
+                            "column": 17
+                          }
+                        },
+                        "tokenRange": [
+                          29,
+                          30
+                        ],
+                        "inferred": {
+                          "type": "basic",
+                          "name": "string"
+                        }
+                      },
+                      "tokenRange": [
+                        27,
+                        30
+                      ]
+                    },
+                    {
+                      "type": "objectField",
+                      "fieldName": {
+                        "tag": 2,
+                        "loc": {
+                          "start": {
+                            "line": 5,
+                            "column": 5
+                          },
+                          "end": {
+                            "line": 5,
+                            "column": 10
+                          }
+                        },
+                        "lexeme": "key-1",
+                        "index": 31
+                      },
+                      "expr": {
+                        "type": "string",
+                        "value": {
+                          "tag": 1,
+                          "loc": {
+                            "start": {
+                              "line": 5,
+                              "column": 14
+                            },
+                            "end": {
+                              "line": 5,
+                              "column": 21
+                            }
+                          },
+                          "string": "value-1",
+                          "index": 33
+                        },
+                        "loc": {
+                          "start": {
+                            "line": 5,
+                            "column": 14
+                          },
+                          "end": {
+                            "line": 5,
+                            "column": 21
+                          }
+                        },
+                        "tokenRange": [
+                          33,
+                          34
+                        ],
+                        "inferred": {
+                          "type": "basic",
+                          "name": "string"
+                        }
+                      },
+                      "tokenRange": [
+                        31,
+                        34
+                      ]
+                    },
+                    {
+                      "type": "expandField",
+                      "expr": {
+                        "type": "variable",
+                        "id": {
+                          "tag": 2,
+                          "loc": {
+                            "start": {
+                              "line": 6,
+                              "column": 8
+                            },
+                            "end": {
+                              "line": 6,
+                              "column": 9
+                            }
+                          },
+                          "lexeme": "m",
+                          "index": 38,
+                          "type": "variable"
+                        },
+                        "loc": {
+                          "start": {
+                            "line": 6,
+                            "column": 8
+                          },
+                          "end": {
+                            "line": 6,
+                            "column": 9
+                          }
+                        },
+                        "tokenRange": [
+                          38,
+                          39
+                        ],
+                        "inferred": {
+                          "type": "map",
+                          "keyType": {
+                            "type": "basic",
+                            "name": "string"
+                          },
+                          "valueType": {
+                            "type": "basic",
+                            "name": "string"
+                          }
+                        }
+                      },
+                      "tokenRange": [
+                        35,
+                        39
+                      ]
+                    }
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 3,
+                      "column": 10
+                    },
+                    "end": {
+                      "line": 7,
+                      "column": 4
+                    }
+                  },
+                  "tokenRange": [
+                    26,
+                    41
+                  ],
+                  "inferred": {
+                    "type": "map",
+                    "keyType": {
+                      "type": "basic",
+                      "name": "string"
+                    },
+                    "valueType": {
+                      "type": "basic",
+                      "name": "string"
+                    }
+                  }
+                },
+                "loc": {
+                  "start": {
+                    "line": 3,
+                    "column": 3
+                  },
+                  "end": {
+                    "line": 8,
+                    "column": 1
+                  }
+                },
+                "tokenRange": [
+                  25,
+                  41
+                ],
+                "needCast": false
+              }
+            ],
+            "tokenRange": [
+              12,
+              42
+            ]
+          },
+          "tokenRange": [
+            12,
+            42
+          ]
+        },
+        "tokenRange": [
+          1,
+          42
+        ]
+      }
+    ]
+  },
+  "comments": {},
+  "models": {},
+  "usedExternModel": {},
+  "conflictModels": {},
+  "usedTypes": {},
+  "parserVersion": "1.1.0"
+}

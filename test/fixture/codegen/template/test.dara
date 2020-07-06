@@ -1,0 +1,4 @@
+static function test(): string {
+  var m:string = 'success';
+  return m;
+}

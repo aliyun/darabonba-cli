@@ -112,7 +112,7 @@ class CodegenCommand extends Command {
       );
       process.exit(-1);
     }
-    const Generator = generatorMap[options.lang];
+    const Generator = generatorMap[lang];
 
     //generate from main dara code
     generateCode({

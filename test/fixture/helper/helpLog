@@ -1,0 +1,23 @@
+
+[37mThe CLI for Darabonba[32m 1.0.1
+[0m
+[33mUsage:
+[0m
+    dara <command> [<args>]
+
+[33mAvailable commands:
+[0m
+start a Darabonba project
+[32m    init   [0m    initialization package information
+
+working on the Darabonba project
+[32m    check  [0m    syntax check for dara file
+[32m    codegen[0m    generate codes
+[32m    build  [0m    build ast file for dara file
+[32m    format [0m    format the dara source file
+[32m    config [0m    view or update configuration
+
+help commands
+[32m    help   [0m    print the help information
+
+

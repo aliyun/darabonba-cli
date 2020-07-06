@@ -6,9 +6,10 @@
     "dara": "./bin/dara.js"
   },
   "scripts": {
-    "test": "mocha -R spec test/**/*.test.js",
+    "test": "mocha -t 10000 -R spec test/**/*.test.js",
     "test-cov": "nyc -r=html -r=text -r=lcov npm run test",
-    "lint": "eslint --fix bin commands lib test"
+    "lint": "eslint --fix bin commands lib test",
+    "ci": "npm run lint && npm run test-cov && codecov"
   },
   "repository": {
     "type": "git",
@@ -19,11 +20,11 @@
   "dependencies": {
     "@darabonba/csharp-generator": "^1",
     "@darabonba/go-generator": "^1",
-    "@darabonba/parser": "^1",
     "@darabonba/java-generator": "^1",
+    "@darabonba/parser": "^1",
     "@darabonba/php-generator": "^1",
-    "@darabonba/typescript-generator": "^1",
     "@darabonba/python-generator": "^1",
+    "@darabonba/typescript-generator": "^1",
     "@types/node": "^12.7.2",
     "debug": "^4.1.1",
     "koa": "^2.10.0",
@@ -33,6 +34,7 @@
     "minimatch": "^3.0.4",
     "minimist": "^1.2.0",
     "read": "^1.0.7",
+    "rewire": "^5.0.0",
     "tar": "^4.4.10",
     "urllib": "^2.34.1"
   },

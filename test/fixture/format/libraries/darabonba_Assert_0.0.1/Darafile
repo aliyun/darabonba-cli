@@ -1,0 +1,6 @@
+{
+  "name": "Assert",
+  "version": "0.0.1",
+  "scope": "darabonba",
+  "main": "./main.dara"
+}

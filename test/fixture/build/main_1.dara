@@ -1,0 +1,4 @@
+model testModel {
+    hello: string,
+    world: string,
+}
