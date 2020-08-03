@@ -3,7 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 const Command = require('../lib/command');
-const Darabonba = require('@darabonba/parser');
+const Lexer = require('@darabonba/parser/lib/lexer');
+const Parser = require('@darabonba/parser/lib/parser');
 const Formatter = require('../lib/formatter');
 const printer = require('../lib/printer');
 
@@ -36,7 +37,9 @@ class FormatCommand extends Command {
   async exec(args, options) {
     const filePath = path.resolve(args.source);
     const sourceCode = fs.readFileSync(filePath, 'utf8');
-    const ast = Darabonba.parse(sourceCode, filePath);
+    const lexer = new Lexer(sourceCode, filePath);
+    const parser = new Parser(lexer);
+    const ast = parser.program();
     const formatter = new Formatter();
     formatter.visit(ast, 0);
     fs.writeFileSync(filePath, formatter.output);

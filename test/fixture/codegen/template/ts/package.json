@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/client.js",
   "scripts": {
-    "test": "mocha --reporter spec --timeout 3000 test/*.test.js",
+    "test": "teaTest -r html -r stdout ts test/client.spec.ts",
     "test-cov": "nyc -e .ts -r=html -r=text -r=lcov npm run test",
     "build": "tsc",
     "prepublishOnly": "tsc"
