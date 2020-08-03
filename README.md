@@ -32,7 +32,7 @@ $ npm install @darabonba/cli -g
 ```sh
 $ dara
 
-The CLI for Darabonba 1.0.0
+The CLI for Darabonba 1.1.0
 
 Usage:
 
@@ -49,6 +49,16 @@ working on the Darabonba project
     build      build ast file for dara file
     format     format the dara source file
     config     view or update configuration
+
+working with Darabonba Repository(as maintainer)
+    login        login to repository
+    info         get the info of a dara scope or a dara pakcage
+    pack         pack the project as a *.tgz file
+    publish      publish the dara package to repository
+    unpublish    unpublish the publish module
+    install      install the dependencies from repository
+    clean        clean the libraries folder
+    score        get darabonba package score
 
 help commands
     help       print the help information

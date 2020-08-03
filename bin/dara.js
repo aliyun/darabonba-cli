@@ -22,6 +22,19 @@ const groups = [
     ]
   },
   {
+    title: 'working with Darabonba Repository(as maintainer)',
+    commands: [
+      require('../commands/login'),
+      require('../commands/info'),
+      require('../commands/pack'),
+      require('../commands/publish'),
+      require('../commands/unpublish'),
+      require('../commands/install'),
+      require('../commands/clean'),
+      require('../commands/score')
+    ]
+  },
+  {
     title: 'help commands',
     commands: [
       require('../commands/help')
