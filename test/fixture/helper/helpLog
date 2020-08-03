@@ -8,16 +8,26 @@
 [33mAvailable commands:
 [0m
 start a Darabonba project
-[32m    init   [0m    initialization package information
+[32m    init     [0m    initialization package information
 
 working on the Darabonba project
-[32m    check  [0m    syntax check for dara file
-[32m    codegen[0m    generate codes
-[32m    build  [0m    build ast file for dara file
-[32m    format [0m    format the dara source file
-[32m    config [0m    view or update configuration
+[32m    check    [0m    syntax check for dara file
+[32m    codegen  [0m    generate codes
+[32m    build    [0m    build ast file for dara file
+[32m    format   [0m    format the dara source file
+[32m    config   [0m    view or update configuration
+
+working with Darabonba Repository(as maintainer)
+[32m    login    [0m    login to repository
+[32m    info     [0m    get the info of a dara scope or a dara pakcage
+[32m    pack     [0m    pack the project as a *.tgz file
+[32m    publish  [0m    publish the dara package to repository
+[32m    unpublish[0m    unpublish the publish module
+[32m    install  [0m    install the dependencies from repository
+[32m    clean    [0m    clean the libraries folder
+[32m    score    [0m    get darabonba package score
 
 help commands
-[32m    help   [0m    print the help information
+[32m    help     [0m    print the help information
 
 
