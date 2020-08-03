@@ -1,5 +1,9 @@
 # ChangeLog
 
+# 1.1.1 - 2020-08-03
+
+> Add repository address in `Darabonba CLI`.
+
 # 1.1.0 - 2020-08-03
 
 > Add repository releated commands in `Darabonba CLI`.
