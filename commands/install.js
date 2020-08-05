@@ -104,7 +104,7 @@ async function checkInstall(ctx, libs, aliasId, pwd) {
 }
 
 async function getLibsFromTeaFile(ctx, pwd) {
-  const pkgPath = path.join(pwd, PKG_FILE);
+  const pkgPath = fs.existsSync(path.join(pwd, 'Darafile')) ? path.join(pwd, 'Darafile') : path.join(pwd,'Teafile');
   if (!fs.existsSync(pkgPath)) {
     return [];
   }
