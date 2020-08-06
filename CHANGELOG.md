@@ -1,5 +1,9 @@
 # ChangeLog
 
+# 1.1.2 - 2020-08-06
+
+> Be compatible with Teafile when install subModule libraries.
+
 # 1.1.1 - 2020-08-03
 
 > Add repository address in `Darabonba CLI`.
