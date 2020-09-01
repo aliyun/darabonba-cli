@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
 # This file is auto-generated, don't edit it. Thanks.
 from Tea.core import TeaCore
 
 
-class Client:
+class Client(object):
+    def __init__(self):
+        pass
 
     @staticmethod
     def hello_map():
@@ -11,5 +14,3 @@ class Client:
             "key": "value",
             "key-1": "value-1"
         }, m)
-    def __init__(self):
-        pass

@@ -1,5 +1,9 @@
 # ChangeLog
 
+# 1.1.3 - 2020-09-01
+
+> Fix the ast's model name when publish module.
+
 # 1.1.2 - 2020-08-06
 
 > Be compatible with Teafile when install subModule libraries.
