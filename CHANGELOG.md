@@ -1,5 +1,9 @@
 # ChangeLog
 
+# 1.1.4 - 2020-09-27
+
+> Exec exit after install finish.
+
 # 1.1.3 - 2020-09-01
 
 > Fix the ast's model name when publish module.
