@@ -265,6 +265,7 @@ class InstallCommand extends Command {
       }
       printer.info(`${ctx.localCount + ctx.remoteCount} libraries installed.` +
         ` (${ctx.localCount} local, ${ctx.remoteCount} remote)`);
+      process.exit(0);
     }
   }
 
