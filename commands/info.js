@@ -73,6 +73,7 @@ class InfoCommand extends Command {
         printer.println(`-    ${printer.fgCyan} ${maintainer} ${printer.reset}`);
       });
       printer.println('');
+      process.exit(0);
     }
   }
 }
