@@ -1,5 +1,9 @@
 # ChangeLog
 
+# 1.1.5 - 2020-09-28
+
+> Exec exit after get module info.
+
 # 1.1.4 - 2020-09-27
 
 > Exec exit after install finish.
