@@ -15,7 +15,8 @@ const generatorMap = {
   go: require('@darabonba/go-generator'),
   java: require('@darabonba/java-generator'),
   php: require('@darabonba/php-generator'),
-  py: require('@darabonba/python-generator')
+  py: require('@darabonba/python-generator'),
+  cpp: require('@darabonba/cpp-generator')
 };
 
 function generateCode(options) {
