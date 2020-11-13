@@ -20,6 +20,7 @@
   "dependencies": {
     "@alicloud/tea-fileform": "^1.2.0",
     "@darabonba/annotation-parser": "^1.0.0",
+    "@darabonba/cpp-generator": "^0.2",
     "@darabonba/csharp-generator": "^1",
     "@darabonba/go-generator": "^1",
     "@darabonba/java-generator": "^1",
