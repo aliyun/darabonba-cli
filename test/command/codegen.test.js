@@ -9,11 +9,12 @@ const readFile = promisify(fs.readFile);
 
 const generateLanguageMap = {
   ts: ['src/client.ts', 'package.json', 'tsconfig.json'],
-  python: ['darabonbasdk/client.py'],
+  python: ['darabonba_sdk/client.py'],
   java: ['src/main/java/com/darabonba/test/Client.java'],
   php: ['Client.php'],
   golang: ['client/client.go', 'go.mod'],
   csharp: ['core/client.csproj', 'core/Client.cs'],
+  cpp: ['src/test.cpp', 'include/darabonba/test.hpp']
 };
 
 describe('codegen command should ok', function () {
