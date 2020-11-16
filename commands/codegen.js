@@ -26,6 +26,7 @@ function generateCode(options) {
     pkgDir: options.rootDir,
     outputDir: options.outputDir,
     testFile: options.testFile,
+    exec: options.exec,
     ...options.pkg[generatorNameMap[options.lang]]
   };
   const generator = new Generator(config);
@@ -33,6 +34,10 @@ function generateCode(options) {
   const filePath = path.join(options.rootDir, options.daraFile);
   const dsl = fs.readFileSync(filePath, 'utf8');
   const ast = DSL.parse(dsl, filePath);
+  if (config.exec === true && !helper.isExecutable(ast)) {
+    printer.error(`There is no static main function in dara, exec option can't be used!`);
+    process.exit(-1);
+  }
   generator.visit(ast);
 }
 
@@ -60,7 +65,15 @@ class CodegenCommand extends Command {
           default: process.cwd()
         }
       ],
-      options: [],
+      options: [
+        {
+          name: 'exec',
+          short: 'e',
+          mode: 'optional',
+          desc: 'generate the executable codes',
+          default: false
+        },
+      ],
     });
   }
 
@@ -122,6 +135,7 @@ class CodegenCommand extends Command {
       outputDir,
       lang,
       daraFile: pkg.main,
+      exec: options.exec,
     });
 
     if (pkg.test && Generator.supportGenerateTest) {
