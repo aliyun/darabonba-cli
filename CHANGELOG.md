@@ -1,5 +1,9 @@
 # ChangeLog
 
+# 1.1.6 - 2020-11-18
+
+> add executable option in codegen command.
+
 # 1.1.5 - 2020-09-28
 
 > Exec exit after get module info.
