@@ -14,6 +14,7 @@ public:
   static map<string, string> helloMap();
 
   Client() {};
+  virtual ~Client() = default;
 };
 } // namespace Darabonba_Test
 
