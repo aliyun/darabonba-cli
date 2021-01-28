@@ -16,6 +16,7 @@ const generatorMap = {
   java: require('@darabonba/java-generator'),
   php: require('@darabonba/php-generator'),
   py: require('@darabonba/python-generator'),
+  py2: require('@darabonba/python-generator'),
   cpp: require('@darabonba/cpp-generator')
 };
 
@@ -29,7 +30,13 @@ function generateCode(options) {
     exec: options.exec,
     ...options.pkg[generatorNameMap[options.lang]]
   };
-  const generator = new Generator(config);
+  const langSubVersionMap = {
+    py2: 'python2'
+  };
+  const generator =
+    langSubVersionMap[options.lang] ?
+      new Generator(config, langSubVersionMap[options.lang])
+      : new Generator(config);
 
   const filePath = path.join(options.rootDir, options.daraFile);
   const dsl = fs.readFileSync(filePath, 'utf8');
@@ -126,8 +133,8 @@ class CodegenCommand extends Command {
       );
       process.exit(-1);
     }
-    const Generator = generatorMap[lang];
 
+    const Generator = generatorMap[lang];
     //generate from main dara code
     generateCode({
       pkg,
