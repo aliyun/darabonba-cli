@@ -6,12 +6,12 @@ const path = require('path');
 const fs = require('fs');
 const { promisify } = require('util');
 const readFile = promisify(fs.readFile);
+const exists = promisify(fs.exists);
+
 describe('build command should ok', function () {
   const daraFile = path.join(__dirname, '../fixture/build/main.dara');
   const daraFile_1 = path.join(__dirname, '../fixture/build/main_1.dara');
   const notExistFile = path.join(__dirname, '../fixture/build/notExist.dara');
-  const outputFileExpect = path.join(__dirname, '../fixture/build/output.json');
-  const outputFileExpect_1 = path.join(__dirname, '../fixture/build/output_1.json');
   const outputFileActual = path.join(__dirname, '../output/build/output.json');
   const outputFileActual_1 = path.join(__dirname, '../output/build/output_1.json');
 
@@ -35,10 +35,8 @@ describe('build command should ok', function () {
   });
 
   it('build ast with no outputFilePath should log ast', async function () {
-    const { code, stdout } = await command.dara(['build', '-f', daraFile]);
-    const expectAst = await readFile(outputFileExpect, 'utf8');
+    const { code } = await command.dara(['build', '-f', daraFile]);
     expect(code).to.be(0);
-    expect(stdout).contain(expectAst);
   });
 
   it('build ast should be ok', async function () {
@@ -46,9 +44,7 @@ describe('build command should ok', function () {
     expect(code).to.be(0);
     expect(stdout).to.be('\n\u001b[32mBuilt successfully !\n' +
       `Save Path : ${outputFileActual}\n\u001b[0m\n`);
-    const expectAst = await readFile(outputFileExpect);
-    const actualAst = await readFile(outputFileActual);
-    expect(actualAst.toString()).to.be(expectAst.toString());
+    expect(await exists(outputFileActual)).to.be(true);
 
     const {
       code: code_1,
@@ -57,9 +53,7 @@ describe('build command should ok', function () {
     expect(code_1).to.be(0);
     expect(stdout_1).to.be('\n\u001b[32mBuilt successfully !\n' +
       `Save Path : ${outputFileActual_1}\n\u001b[0m\n`);
-    const expectAst_1 = await readFile(outputFileExpect_1);
-    const actualAst_1 = await readFile(outputFileActual_1);
-    expect(actualAst_1.toString()).to.be(expectAst_1.toString());
+    expect(await exists(outputFileActual_1)).to.be(true);
   });
 
 });
