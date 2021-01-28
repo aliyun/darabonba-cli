@@ -1,5 +1,9 @@
 # ChangeLog
 
+# 1.1.7 - 2021-01-28
+
+> codegen command supported generate python2.
+
 # 1.1.6 - 2020-11-18
 
 > add executable option in codegen command.
