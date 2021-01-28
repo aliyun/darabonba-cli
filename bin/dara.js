@@ -3,7 +3,6 @@
 'use strict';
 
 const CommandsApplication = require('../lib/app');
-
 const groups = [
   {
     title: 'start a Darabonba project',
