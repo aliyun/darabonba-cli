@@ -8,9 +8,18 @@ const crypto = require('crypto');
 const { DownloadModuleObject } = require('@darabonba/repo-client');
 
 const { request, requestHandler } = require('../lib/util');
-const { PKG_FILE, INSTALL_PATH } = require('../lib/constants');
+const { PKG_FILE, INSTALL_PATH, DARA_CONFIG_FILE } = require('../lib/constants');
 const Command = require('../lib/command');
 const printer = require('../lib/printer');
+
+
+function isOverseas() {
+  if (!fs.existsSync(DARA_CONFIG_FILE)) {
+    return '';
+  }
+  let config = JSON.parse(fs.readFileSync(DARA_CONFIG_FILE, { encoding: 'utf8' }));
+  return config.overseas || false;
+}
 
 function downloadAndCheckShasum(upstream, downstream) {
   let onEnd, onError, cleanUp;
@@ -53,8 +62,11 @@ async function downloadModules(ctx, rootDir, downloadList) {
     if (!moduleInfo || !moduleInfo.dist_tarball) {
       continue;
     }
-
-    let { res } = await request(moduleInfo.dist_tarball, {
+    let distTarball = moduleInfo.dist_tarball;
+    if (isOverseas()) {
+      distTarball = distTarball.replace('oss-cn-zhangjiakou', 'oss-accelerate');
+    }
+    let { res } = await request(distTarball, {
       streaming: true,
       followRedirect: true,
     });
