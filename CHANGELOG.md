@@ -1,5 +1,9 @@
 # ChangeLog
 
+# 1.1.8 - 2021-03-01
+
+> sovle overseas user install overtime.
+
 # 1.1.7 - 2021-01-28
 
 > codegen command supported generate python2.
