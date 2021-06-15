@@ -1,6 +1,6 @@
 {
   "name": "@darabonba/cli",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "The CLI for Darabonba",
   "bin": {
     "dara": "./bin/dara.js"
