@@ -38,8 +38,8 @@ class PackCommand extends Command {
     const { scope, name, version } = pkg;
     if (!scope || !name || !version) {
       console.log();
-      console.log(colors.red('The contents of the Teafile are incomplete.'));
-      console.log(colors.red('You can use `tea init` to initialize the file contents.'));
+      console.log(colors.red('The contents of the Darafile are incomplete.'));
+      console.log(colors.red('You can use `dara init` to initialize the file contents.'));
       console.log();
       this.process.exit(-1);
     }
@@ -56,7 +56,7 @@ class PackCommand extends Command {
     console.log();
     console.log(colors.yellow('Usage:'));
     console.log();
-    console.log('    tea pack');
+    console.log('    dara pack');
     console.log();
   }
 }

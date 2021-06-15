@@ -32,7 +32,7 @@ class CleanCommand extends Command {
     const pkgPath = path.join(sourceDir, PKG_FILE);
     if (!fs.existsSync(pkgPath)) {
       console.log();
-      console.log(colors.red(`Not a Tea package folder`));
+      console.log(colors.red(`Not a Darabonba package folder`));
       console.log();
       process.exit(-1);
     }
@@ -40,13 +40,13 @@ class CleanCommand extends Command {
     const libPath = path.join(sourceDir, 'libraries');
     delDir(libPath);
     console.log();
-    console.log(colors.green(`Clean ${libPath} success !`));
+    console.log(colors.green(`Clean ${libPath} success!`));
     console.log();
     const libLockPath = path.join(sourceDir, '.libraries.json');
     if (fs.existsSync(libLockPath)) {
       fs.unlinkSync(libLockPath);
       console.log();
-      console.log(colors.green(`Clean ${libLockPath} success !`));
+      console.log(colors.green(`Clean ${libLockPath} success!`));
       console.log();
     }
   }
@@ -55,7 +55,7 @@ class CleanCommand extends Command {
     console.log();
     console.log(colors.yellow('Usage:'));
     console.log();
-    console.log('    tea clean');
+    console.log('    dara clean');
     console.log();
   }
 }
