@@ -24,7 +24,7 @@ describe('format command should ok', function () {
     const actualContent = await readFile(daraFile);
     expect(actualContent.toString()).to.be(expectContent.toString());
   });
-  
+
   it('format a complex file should be ok', async function () {
     const daraFile = path.join(__dirname, '../fixture/format/complex.dara');
     const { code } = await command.dara(['format', daraFile]);
