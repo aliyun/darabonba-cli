@@ -1,10 +1,15 @@
 'use strict';
 
-const printer = require('../lib/printer');
-const Command = require('../lib/command');
-const Darabonba = require('@darabonba/parser');
+// natives
 const path = require('path');
 const fs = require('fs');
+
+// thirds
+const colors = require('colors/safe');
+const Darabonba = require('@darabonba/parser');
+
+// locals
+const Command = require('../lib/command');
 
 class CheckCommand extends Command {
   constructor() {
@@ -30,15 +35,17 @@ class CheckCommand extends Command {
     const source = fs.readFileSync(filePath, 'utf8');
 
     Darabonba.parse(source, filePath);
-    printer.success('Check success !');
+
+    console.log();
+    console.log(colors.green('Check success!'));
+    console.log();
   }
 
   usage() {
-    printer.println(printer.fgYellow);
-    printer.println('Usage:');
-    printer.println(printer.reset);
-    printer.println('    dara check <filename.dara>');
-    printer.println();
+    console.log(colors.yellow('Usage:'));
+    console.log();
+    console.log('    dara check <filename.dara>');
+    console.log();
   }
 }
 

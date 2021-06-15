@@ -5,13 +5,12 @@ const fs = require('fs');
 const tar = require('tar');
 const crypto = require('crypto');
 
+const colors = require('colors/safe');
 const { DownloadModuleObject } = require('@darabonba/repo-client');
 
 const { request, requestHandler } = require('../lib/util');
 const { PKG_FILE, INSTALL_PATH, DARA_CONFIG_FILE } = require('../lib/constants');
 const Command = require('../lib/command');
-const printer = require('../lib/printer');
-
 
 function isOverseas() {
   if (!fs.existsSync(DARA_CONFIG_FILE)) {
@@ -85,7 +84,9 @@ async function downloadModules(ctx, rootDir, downloadList) {
     }));
 
     if (moduleInfo.dist_shasum !== shasum) {
-      printer.error(`Bad Download File: ${moduleInfo.version} the download module check shasum error!`);
+      console.log();
+      console.log(colors.red(`Bad Download File: ${moduleInfo.version} the download module check shasum error!`));
+      console.log();
       process.exit(-1);
     }
     moduleDirs.push(targetDir);
@@ -125,7 +126,7 @@ async function getLibsFromTeaFile(ctx, pwd) {
   const pkg = JSON.parse(pkgContent);
   const libraries = pkg.libraries || {};
   const aliasIds = Object.keys(libraries);
-  printer.info(`${pkgPath} found ${aliasIds.length} libraries`);
+  console.log(colors.blue(`${pkgPath} found ${aliasIds.length} libraries`));
   let installArr = [];
   aliasIds.forEach((aliasId) => {
     if (!aliasId) {
@@ -134,7 +135,7 @@ async function getLibsFromTeaFile(ctx, pwd) {
 
     const libPath = libraries[aliasId];
     if (libPath.startsWith('./') || libPath.startsWith('../') || libPath.startsWith('/')) {
-      printer.info(`found ${aliasId} => ${libPath}`);
+      console.log(colors.blue(`found ${aliasId} => ${libPath}`));
       ctx.localCount++;
       //local directly overwrite
       ctx.librariesMap[aliasId] = libPath;
@@ -155,7 +156,7 @@ async function getLibsFromTeaFile(ctx, pwd) {
     }
   });
 
-  printer.info('fetching from remote repository');
+  console.log(colors.blue('fetching from remote repository'));
   return installArr;
 }
 
@@ -224,7 +225,9 @@ class InstallCommand extends Command {
     const rootDir = process.cwd();
     let pkgPath = path.join(rootDir, PKG_FILE);
     if (!fs.existsSync(pkgPath)) {
-      printer.error(`This folder is not a Darabonba package project(No Darafile exist)`);
+      console.log();
+      console.log(colors.red(`This folder is not a Darabonba package project(No Darafile exist)`));
+      console.log();
       process.exit(-1);
     }
 
@@ -250,8 +253,10 @@ class InstallCommand extends Command {
         } else {
           let [, name,] = argv[0].split(':');
           if (!name) {
-            printer.error(`Unrecognized module path: ${argv[0]},
-            expected module path format: <scope:module[:version]>.`);
+            console.log();
+            console.log(colors.red(`Unrecognized module path: ${argv[0]}, ` +
+              `expected module path format: <scope:module[:version]>.`));
+            console.log();
             process.exit(-1);
           }
           moduleName = name;
@@ -262,7 +267,7 @@ class InstallCommand extends Command {
         pkg.libraries[moduleName] = argv[0];
         fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
       }
-      printer.info(`1 libraries installed.`);
+      console.log(colors.blue(`1 libraries installed.`));
     } else {
       if (!options.force && fs.existsSync(libraryPath)) {
         let libraryContent = fs.readFileSync(libraryPath);
@@ -275,20 +280,21 @@ class InstallCommand extends Command {
         const lockPath = path.join(rootDir, '.libraries.json');
         fs.writeFileSync(lockPath, JSON.stringify(ctx.librariesMap, null, 2));
       }
-      printer.info(`${ctx.localCount + ctx.remoteCount} libraries installed.` +
-        ` (${ctx.localCount} local, ${ctx.remoteCount} remote)`);
+
+      console.log(colors.blue(`${ctx.localCount + ctx.remoteCount} libraries installed.` +
+        ` (${ctx.localCount} local, ${ctx.remoteCount} remote)`));
       process.exit(0);
     }
   }
 
   usage() {
-    printer.println(printer.fgYellow);
-    printer.println('Usage:');
-    printer.println(printer.reset);
-    printer.println('    dara install');
-    printer.println('    dara install -f');
-    printer.println('    dara install -S <modulePath> [moduleAlias]');
-    printer.println();
+    console.log();
+    console.log(colors.yellow('Usage:'));
+    console.log();
+    console.log('    dara install');
+    console.log('    dara install -f');
+    console.log('    dara install -S <modulePath> [moduleAlias]');
+    console.log();
   }
 }
 

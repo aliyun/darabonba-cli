@@ -1,10 +1,15 @@
 'use strict';
 
-const printer = require('../lib/printer');
-const Command = require('../lib/command');
-const Darabonba = require('@darabonba/parser');
+// natives
 const path = require('path');
 const fs = require('fs');
+
+// thirds
+const colors = require('colors/safe');
+const Darabonba = require('@darabonba/parser');
+// locals
+const Command = require('../lib/command');
+const { fixed } = require('../lib/layout');
 
 class BuildCommand extends Command {
   constructor() {
@@ -42,28 +47,28 @@ class BuildCommand extends Command {
         fs.mkdirSync(path.dirname(options.output), { recursive: true });
       }
       fs.writeFileSync(options.output, JSON.stringify(ast, null, 2));
-      printer.success(
-        'Built successfully !',
-        'Save Path : ' + path.resolve(options.output)
-      );
+      console.log();
+      console.log(colors.green('Built successfully!'));
+      console.log(colors.green('Save Path : ' + path.resolve(options.output)));
+      console.log();
     } else {
-      printer.println();
-      printer.println(JSON.stringify(ast, null, 2));
-      printer.println();
+      console.log();
+      console.log(JSON.stringify(ast, null, 2));
+      console.log();
     }
   }
 
   usage() {
-    printer.println(printer.fgYellow);
-    printer.println('Usage:');
-    printer.println(printer.reset);
-    printer.println('    dara build -f <filename.dara> -o <outputAstFile>');
-    printer.println(printer.fgYellow);
-    printer.println('Options:');
-    printer.println(printer.reset);
-    printer.print('    ').fixed('filename', 11).fixed(' : ', 3).fixed('required').println();
-    printer.print('    ').fixed('output', 11).fixed(' : ', 3).fixed('optional').println();
-    printer.println();
+    console.log();
+    console.log(colors.yellow('Usage:'));
+    console.log();
+    console.log('    dara build -f <filename.dara> -o <outputAstFile>');
+    console.log();
+    console.log(colors.yellow('Options:'));
+    console.log();
+    console.log(`    ${fixed('filename', 11)} : ${fixed('required')}`);
+    console.log(`    ${fixed('output', 11)} : ${fixed('optional')}`);
+    console.log();
   }
 }
 

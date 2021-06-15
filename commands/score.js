@@ -3,9 +3,10 @@
 const path = require('path');
 const fs = require('fs');
 
+const colors = require('colors/safe');
+
 const Command = require('../lib/command');
 const AstUtil = require('../lib/ast_util');
-const printer = require('../lib/printer');
 const {
   PKG_FILE,
   DARA_CONFIG_FILE
@@ -32,7 +33,9 @@ class ScoreCommand extends Command {
 
   async exec() {
     this.getScore().catch((err) => {
-      printer.error(err.stack);
+      console.log();
+      console.log(colors.red(err.stack));
+      console.log();
       process.exit(-1);
     });
   }
@@ -41,49 +44,54 @@ class ScoreCommand extends Command {
     const pkgDir = process.cwd();
     const pkgFilePath = path.join(pkgDir, PKG_FILE);
     if (!fs.existsSync(pkgFilePath)) {
-      printer.error(`This folder is not a Darabonba package project(No Darafile exist)`);
+      console.log();
+      console.log(colors.red(`This folder is not a Darabonba package project(No Darafile exist)`));
+      console.log();
       process.exit(-1);
     }
     const moduleAst = new AstUtil(pkgDir);
     const { scope, name, version } = moduleAst.getPkg();
     if (!scope || !name || !version) {
-      printer.error('The contents of the Darafile are incomplete.');
-      printer.error('You can use `dara init` to initialize the file contents.');
+      console.log();
+      console.log(colors.red('The contents of the Darafile are incomplete.'));
+      console.log(colors.red('You can use `dara init` to initialize the file contents.'));
+      console.log();
       this.process.exit(-1);
     }
     const scoreResult = moduleAst.getScore();
-    this.printScore('\n Total score:\t\t\t', scoreResult.total);
+    console.log();
+    this.printScore('Total score:\t\t\t', scoreResult.total);
     this.printScore(' The readme score:\t\t', scoreResult.readme);
     this.printScore(' The release score:\t\t', scoreResult.release);
     this.printScore(' The annotation score:\t\t', scoreResult.annotation);
     const report = moduleAst.getScoreReport();
     if (report.release && report.release.length) {
-      printer.print(`\n\n Unreleased Languages: ${report.release.join(', ')}`);
+      process.stdout.write(`\n\n Unreleased Languages: ${report.release.join(', ')}`);
     }
     let apiPrint = this.formatScoreReportTable(report.api, ['incomplete_APIs', 'missing_items']);
     if (apiPrint) {
-      printer.print('\n\n APIs Annotation Detail\n');
-      printer.print(apiPrint);
+      process.stdout.write('\n\n APIs Annotation Detail\n');
+      process.stdout.write(apiPrint);
     }
     let functionPrint = this.formatScoreReportTable(report.function, ['incomplete_functions', 'missing_items']);
     if (functionPrint) {
-      printer.print('\n\n Functions Annotation Detail\n');
-      printer.print(functionPrint);
+      process.stdout.write('\n\n Functions Annotation Detail\n');
+      process.stdout.write(functionPrint);
     }
     let modelPrint = this.formatScoreReportTable(report.model, ['incomplete_models', 'missing_items']);
     if (modelPrint) {
-      printer.print('\n\n Models Annotation Detail\n');
-      printer.print(modelPrint);
+      process.stdout.write('\n\n Models Annotation Detail\n');
+      process.stdout.write(modelPrint);
     }
   }
 
   printScore(title, score) {
     if (score > 80) {
-      printer.output(printer.fgGreen, [`${title}${score}`]);
+      process.stdout.write(colors.green(`${title}${score}`));
     } else if (score > 60) {
-      printer.output(printer.fgYellow, [`${title}${score}`]);
+      process.stdout.write(colors.yellow(`${title}${score}`));
     } else {
-      printer.output(printer.fgRed, [`${title}${score}`]);
+      process.stdout.write(colors.red(`${title}${score}`));
     }
   }
 
@@ -143,11 +151,11 @@ class ScoreCommand extends Command {
   }
 
   usage() {
-    printer.println(printer.fgYellow);
-    printer.println('Usage:');
-    printer.println(printer.reset);
-    printer.println('    dara score');
-    printer.println();
+    console.log();
+    console.log(colors.yellow('Usage:'));
+    console.log();
+    console.log('    dara score');
+    console.log();
   }
 }
 

@@ -30,6 +30,7 @@
     "@darabonba/repo-client": "^1",
     "@darabonba/typescript-generator": "^1",
     "@types/node": "^12.7.2",
+    "colors": "^1.4.0",
     "debug": "^4.1.1",
     "koa": "^2.10.0",
     "koa-bodyparser": "^4.2.1",

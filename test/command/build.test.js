@@ -7,6 +7,7 @@ const fs = require('fs');
 const { promisify } = require('util');
 const readFile = promisify(fs.readFile);
 const exists = promisify(fs.exists);
+const assert = require('assert');
 
 describe('build command should ok', function () {
   const daraFile = path.join(__dirname, '../fixture/build/main.dara');
@@ -19,7 +20,7 @@ describe('build command should ok', function () {
     const { code, stdout } = await command.dara(['build']);
     const usageLog = await readFile(path.join(__dirname, '../fixture/build/usageLog'), 'utf8');
     expect(code).to.be(255);
-    expect(stdout).to.be(usageLog);
+    assert.deepStrictEqual(stdout, usageLog);
   });
 
   it('build ast with invalid filePath should be error', async function () {
@@ -42,8 +43,8 @@ describe('build command should ok', function () {
   it('build ast should be ok', async function () {
     const { code, stdout } = await command.dara(['build', '-f', daraFile, '-o', outputFileActual]);
     expect(code).to.be(0);
-    expect(stdout).to.be('\n\u001b[32mBuilt successfully !\n' +
-      `Save Path : ${outputFileActual}\n\u001b[0m\n`);
+    expect(stdout).to.be('\n\u001b[32mBuilt successfully!\u001b[39m\n' +
+      `\u001b[32mSave Path : ${outputFileActual}\u001b[39m\n\n`);
     expect(await exists(outputFileActual)).to.be(true);
 
     const {
@@ -51,8 +52,8 @@ describe('build command should ok', function () {
       stdout: stdout_1
     } = await command.dara(['build', '-f', daraFile_1, '-o', outputFileActual_1]);
     expect(code_1).to.be(0);
-    expect(stdout_1).to.be('\n\u001b[32mBuilt successfully !\n' +
-      `Save Path : ${outputFileActual_1}\n\u001b[0m\n`);
+    expect(stdout_1).to.be('\n\u001b[32mBuilt successfully!\u001b[39m\n' +
+      `\u001b[32mSave Path : ${outputFileActual_1}\u001b[39m\n\n`);
     expect(await exists(outputFileActual_1)).to.be(true);
   });
 

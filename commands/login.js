@@ -2,9 +2,8 @@
 
 const fs = require('fs');
 
-const {
-  UserObject,
-} = require('@darabonba/repo-client');
+const colors = require('colors/safe');
+const { UserObject } = require('@darabonba/repo-client');
 
 const {
   requestHandler,
@@ -14,7 +13,6 @@ const {
 } = require('../lib/util');
 const { DARA_CONFIG_FILE } = require('../lib/constants');
 const Command = require('../lib/command');
-const printer = require('../lib/printer');
 
 class LoginCommand extends Command {
   constructor() {
@@ -49,7 +47,9 @@ class LoginCommand extends Command {
         retry: true
       });
     } catch (err) {
-      printer.error('Login Cancled!');
+      console.log();
+      console.log(colors.red('Login Cancled!'));
+      console.log();
       process.exit(-1);
     }
 
@@ -63,24 +63,28 @@ class LoginCommand extends Command {
       obj['authToken'] = data.rev;
       obj['password'] = aesEncrypt(obj['password']);
       fs.writeFileSync(DARA_CONFIG_FILE, JSON.stringify(obj, null, 2));
-      printer.success('Login Successfully!');
+      console.log();
+      console.log(colors.green('Login Successfully!'));
+      console.log();
     }
   }
 
   async exec() {
     this.login().catch((err) => {
-      printer.error(err.stack);
+      console.log();
+      console.log(colors.red(err.stack));
+      console.log();
       process.exit(-1);
     });
   }
 
   usage() {
-    printer.println(printer.fgYellow);
-    printer.println('Usage:');
-    printer.println(printer.reset);
-    printer.println('    tea login');
-    printer.println('    tea adduser');
-    printer.println();
+    console.log();
+    console.log(colors.yellow('Usage:'));
+    console.log();
+    console.log('    dara login');
+    console.log('    dara adduser');
+    console.log();
   }
 }
 

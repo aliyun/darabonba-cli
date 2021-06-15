@@ -3,7 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const printer = require('../lib/printer');
+const colors = require('colors/safe');
 const Command = require('../lib/command');
 const { delDir } = require('../lib/util');
 const { PKG_FILE } = require('../lib/constants');
@@ -31,26 +31,32 @@ class CleanCommand extends Command {
     const sourceDir = args.sourceDir;
     const pkgPath = path.join(sourceDir, PKG_FILE);
     if (!fs.existsSync(pkgPath)) {
-      printer.error(`Not a Tea package folder`);
+      console.log();
+      console.log(colors.red(`Not a Tea package folder`));
+      console.log();
       process.exit(-1);
     }
 
     const libPath = path.join(sourceDir, 'libraries');
     delDir(libPath);
-    printer.success(`Clean ${libPath} success !`);
+    console.log();
+    console.log(colors.green(`Clean ${libPath} success !`));
+    console.log();
     const libLockPath = path.join(sourceDir, '.libraries.json');
     if (fs.existsSync(libLockPath)) {
       fs.unlinkSync(libLockPath);
-      printer.success(`Clean ${libLockPath} success !`);
+      console.log();
+      console.log(colors.green(`Clean ${libLockPath} success !`));
+      console.log();
     }
   }
 
   usage() {
-    printer.println(printer.fgYellow);
-    printer.println('Usage:');
-    printer.println(printer.reset);
-    printer.println('    tea clean');
-    printer.println();
+    console.log();
+    console.log(colors.yellow('Usage:'));
+    console.log();
+    console.log('    tea clean');
+    console.log();
   }
 }
 

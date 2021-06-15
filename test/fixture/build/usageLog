@@ -1,13 +1,13 @@
 
-[31m  Required option : filename   
-[0m
-[33m
-Usage:
-[0m
+[31m  Required option : filename[39m
+
+
+[33mUsage:[39m
+
     dara build -f <filename.dara> -o <outputAstFile>
-[33m
-Options:
-[0m
+
+[33mOptions:[39m
+
     filename    : required  
     output      : optional  
 

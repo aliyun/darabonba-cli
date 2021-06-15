@@ -2,10 +2,12 @@
 
 const fs = require('fs');
 const path = require('path');
-const Command = require('../lib/command');
+
+const colors = require('colors/safe');
 const Darabonba = require('@darabonba/parser');
+
+const Command = require('../lib/command');
 const Formatter = require('../lib/formatter');
-const printer = require('../lib/printer');
 
 class FormatCommand extends Command {
   constructor() {
@@ -25,12 +27,11 @@ class FormatCommand extends Command {
   }
 
   usage() {
-    printer.println(printer.fgYellow);
-    printer.println('Usage:');
-    printer.println(printer.reset);
-    printer.println('    dara format <filename.dara>');
-    printer.println(printer.fgYellow);
-    printer.println();
+    console.log();
+    console.log(colors.yellow('Usage:'));
+    console.log();
+    console.log('    dara format <filename.dara>');
+    console.log();
   }
 
   async exec(args, options) {

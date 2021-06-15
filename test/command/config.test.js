@@ -22,7 +22,7 @@ describe('config command should ok', function () {
   it('config set should ok', async function () {
     const { code, stdout } = await command.dara(['config', 'set', 'key1', 'value1']);
     expect(code).to.be(0);
-    expect(stdout).to.be(`\n\u001b[32mUpdate successfully!\n\u001b[0m\n`);
+    expect(stdout).to.be(`\n\u001b[32mUpdate successfully!\u001b[39m\n\n`);
   });
 
   it('config get should ok', async function () {
@@ -34,7 +34,7 @@ describe('config command should ok', function () {
   it('config delete should ok', async function () {
     const { code, stdout } = await command.dara(['config', 'delete', 'key1']);
     expect(code).to.be(0);
-    expect(stdout).to.be('\n\u001b[32mDelete successfully!\n\u001b[0m\n');
+    expect(stdout).to.be('\n\u001b[32mDelete successfully!\u001b[39m\n\n');
     const { value } = await command.dara(['config', 'get', 'key1']);
     expect(value).to.be(undefined);
   });

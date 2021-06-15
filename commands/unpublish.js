@@ -1,8 +1,8 @@
 'use strict';
 
+const colors = require('colors/safe');
 
 const Command = require('../lib/command');
-const printer = require('../lib/printer');
 const {
   requestHandler,
 } = require('../lib/util.js');
@@ -33,18 +33,20 @@ class UnpublishCommand extends Command {
   }
 
   usage() {
-    printer.println(printer.fgYellow);
-    printer.println('Usage:');
-    printer.println(printer.reset);
-    printer.println('    dara unpublish <scope:moduleName:version>');
-    printer.println('    dara unpublish <scope:moduleName> -f');
-    printer.println();
+    console.log();
+    console.log(colors.yellow('Usage:'));
+    console.log();
+    console.log('    dara unpublish <scope:moduleName:version>');
+    console.log('    dara unpublish <scope:moduleName> -f');
+    console.log();
   }
 
   async exec(args, options) {
     let moduleInfo = args.moduleInfo.split(':');
     if (moduleInfo.length < 2) {
-      printer.error('Bad augument: moduleInfo');
+      console.log();
+      console.log(colors.red('Bad augument: moduleInfo'));
+      console.log();
       this.usage();
       process.exit(-1);
     }
@@ -52,7 +54,9 @@ class UnpublishCommand extends Command {
     let data;
     if (!version) {
       if (!options.force) {
-        printer.error('Bad augument: delete all module versions need -f to force delete!');
+        console.log();
+        console.log(colors.red('Bad augument: delete all module versions need -f to force delete!'));
+        console.log();
         this.usage();
         process.exit(-1);
       }
@@ -61,7 +65,9 @@ class UnpublishCommand extends Command {
       data = await requestHandler().deleteModuleVersion(scope, moduleName, version);
     }
     if (data.ok) {
-      printer.success('Unpublish successfully!');
+      console.log();
+      console.log(colors.green('Unpublish successfully!'));
+      console.log();
     }
   }
 }
