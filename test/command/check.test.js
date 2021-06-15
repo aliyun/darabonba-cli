@@ -18,7 +18,7 @@ describe('check command should ok', function () {
   it('check a dara file should be ok', async function () {
     const { code, stdout } = await command.dara(['check', daraFile]);
     expect(code).to.be(0);
-    expect(stdout).to.be('\n\u001b[32mCheck success !\n\u001b[0m\n');
+    expect(stdout).to.be('\n\u001b[32mCheck success!\u001b[39m\n\n');
   });
 
 });

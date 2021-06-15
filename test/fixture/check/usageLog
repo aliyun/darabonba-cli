@@ -1,8 +1,7 @@
 
-[31m  Required argument : filename   
-[0m
-[33m
-Usage:
-[0m
+[31m  Required argument : filename[39m
+
+[33mUsage:[39m
+
     dara check <filename.dara>
 

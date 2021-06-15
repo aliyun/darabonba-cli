@@ -3,12 +3,12 @@
 const path = require('path');
 const fs = require('fs');
 
+const colors = require('colors/safe');
+
 const {
   PKG_FILE
 } = require('../lib/constants');
-
 const Command = require('../lib/command');
-const printer = require('../lib/printer');
 const { pack } = require('../lib/pack');
 
 class PackCommand extends Command {
@@ -27,7 +27,9 @@ class PackCommand extends Command {
     const rootDir = process.cwd();
     const pkgFilePath = path.join(rootDir, PKG_FILE);
     if (!fs.existsSync(pkgFilePath)) {
-      printer.error('The Teafile does not exist');
+      console.log();
+      console.log(colors.red('The Teafile does not exist'));
+      console.log();
       process.exit(-1);
     }
 
@@ -35,23 +37,27 @@ class PackCommand extends Command {
     const pkg = JSON.parse(pkgContent);
     const { scope, name, version } = pkg;
     if (!scope || !name || !version) {
-      printer.error('The contents of the Teafile are incomplete.');
-      printer.error('You can use `tea init` to initialize the file contents.');
+      console.log();
+      console.log(colors.red('The contents of the Teafile are incomplete.'));
+      console.log(colors.red('You can use `tea init` to initialize the file contents.'));
+      console.log();
       this.process.exit(-1);
     }
 
     pack(pkg, rootDir).catch((err) => {
-      printer.error(err.stack);
+      console.log();
+      console.log(colors.red(err.stack));
+      console.log();
       process.exit(-1);
     });
   }
 
   usage() {
-    printer.println(printer.fgYellow);
-    printer.println('Usage:');
-    printer.println(printer.reset);
-    printer.println('    tea pack');
-    printer.println();
+    console.log();
+    console.log(colors.yellow('Usage:'));
+    console.log();
+    console.log('    tea pack');
+    console.log();
   }
 }
 

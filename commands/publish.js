@@ -4,13 +4,13 @@ const path = require('path');
 const fs = require('fs');
 
 const debug = require('debug')('dara:publish');
+const colors = require('colors/safe');
 const {
   PublishModuleObject,
 } = require('@darabonba/repo-client');
 const { FileField } = require('@alicloud/tea-fileform');
 
 const Command = require('../lib/command');
-const printer = require('../lib/printer');
 const { pack } = require('../lib/pack');
 const { requestHandler } = require('../lib/util');
 const AstUtil = require('../lib/ast_util');
@@ -40,7 +40,9 @@ class PublishCommand extends Command {
 
   async exec() {
     this.publish().catch((err) => {
-      printer.error(err.stack);
+      console.log();
+      console.log(colors.red(err.stack));
+      console.log();
       process.exit(-1);
     });
   }
@@ -50,14 +52,18 @@ class PublishCommand extends Command {
     const pkgFilePath = path.join(pkgDir, PKG_FILE);
     // Check the Teafile
     if (!fs.existsSync(pkgFilePath)) {
-      printer.error('The Teafile does not exist');
+      console.log();
+      console.log(colors.red('The Teafile does not exist'));
+      console.log();
       process.exit(-1);
     }
     const moduleAst = new AstUtil(pkgDir);
     const { scope, name, version } = moduleAst.getPkg();
     if (!scope || !name || !version) {
-      printer.error('The contents of the Teafile are incomplete.');
-      printer.error('You can use `dara init` to initialize the file contents.');
+      console.log();
+      console.log(colors.red('The contents of the Teafile are incomplete.'));
+      console.log(colors.red('You can use `dara init` to initialize the file contents.'));
+      console.log();
       this.process.exit(-1);
     }
     const daraAst = moduleAst.getAstData();
@@ -65,11 +71,11 @@ class PublishCommand extends Command {
     const tgzFileName = `${scope}-${name}-${version}.tgz`;
     const tgzFilePath = path.join(pkgDir, tgzFileName);
 
-    printer.info(`Packing the package(${scope}-${name}-${version})`);
+    console.log(colors.blue(`Packing the package(${scope}-${name}-${version})`));
     await pack(moduleAst.getPkg(), pkgDir);
     let tgzFileStream = fs.createReadStream(tgzFilePath);
     const { size } = fs.statSync(tgzFilePath);
-    printer.info('uploading the pack file');
+    console.log(colors.blue('uploading the pack file'));
     let fileInfo = new FileField({
       filename: tgzFileName,
       contentType: 'application/x-gzip',
@@ -89,18 +95,20 @@ class PublishCommand extends Command {
     const client = requestHandler(this.options.c);
     let data = await client.publishModule(moduleInfo);
     if (data.ok) {
-      printer.success('Publish successfully!');
+      console.log();
+      console.log(colors.green('Publish successfully!'));
+      console.log();
       fs.unlinkSync(tgzFilePath);
       process.exit(0);
     }
   }
 
   usage() {
-    printer.println(printer.fgYellow);
-    printer.println('Usage:');
-    printer.println(printer.reset);
-    printer.println('    dara publish');
-    printer.println();
+    console.log();
+    console.log(colors.yellow('Usage:'));
+    console.log();
+    console.log('    dara publish');
+    console.log();
   }
 }
 

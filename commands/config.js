@@ -4,11 +4,10 @@ const fs = require('fs');
 const os = require('os');
 const child_process = require('child_process');
 
+const colors = require('colors/safe');
 const debug = require('debug')('dara:config');
 
 const Command = require('../lib/command');
-const printer = require('../lib/printer');
-
 const {
   DARA_CONFIG_FILE
 } = require('../lib/constants');
@@ -49,17 +48,17 @@ class ConfigCommand extends Command {
   }
 
   usage() {
-    printer.println(printer.fgYellow);
-    printer.println('Usage:');
-    printer.println(printer.reset);
-    printer.println('    dara config set <key> <value>');
-    printer.println('    dara config get [<key>]');
-    printer.println('    dara config delete <key>');
-    printer.println('    dara config edit');
-    printer.println('    dara config list');
-    printer.println('    dara config ls');
-    printer.println('    dara config [action] -c <configFilePath>');
-    printer.println();
+    console.log();
+    console.log(colors.yellow('Usage:'));
+    console.log();
+    console.log('    dara config set <key> <value>');
+    console.log('    dara config get [<key>]');
+    console.log('    dara config delete <key>');
+    console.log('    dara config edit');
+    console.log('    dara config list');
+    console.log('    dara config ls');
+    console.log('    dara config [action] -c <configFilePath>');
+    console.log();
   }
 
   loadConfig() {
@@ -105,16 +104,18 @@ class ConfigCommand extends Command {
     const config = this.loadConfig();
     config[key] = value;
     this.saveConfig(config);
-    printer.success('Update successfully!');
+    console.log();
+    console.log(colors.green('Update successfully!'));
+    console.log();
     debug(`Saved config to ${this.daraConfigFile}`);
   }
 
   get(key) {
     const config = this.loadConfig();
     if (key === undefined) {
-      printer.println(JSON.stringify(config, null, 2));
+      console.log(JSON.stringify(config, null, 2));
     } else {
-      printer.println(JSON.stringify(config[key], null, 2));
+      console.log(JSON.stringify(config[key], null, 2));
     }
     debug(`Load config from ${this.daraConfigFile}`);
   }
@@ -123,7 +124,9 @@ class ConfigCommand extends Command {
     const config = this.loadConfig();
     delete config[key];
     this.saveConfig(config);
-    printer.success('Delete successfully!');
+    console.log();
+    console.log(colors.green('Delete successfully!'));
+    console.log();
     debug(`Updated config to ${this.daraConfigFile}`);
   }
 
@@ -158,7 +161,9 @@ class ConfigCommand extends Command {
       }
     }
 
-    printer.error('No program found to open this file');
+    console.log();
+    console.log(colors.red('No program found to open this file'));
+    console.log();
   }
 }
 

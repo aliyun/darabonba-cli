@@ -1,9 +1,8 @@
 
-[31m  Required argument : source   
-[0m
-[33m
-Usage:
-[0m
+[31m  Required argument : source[39m
+
+
+[33mUsage:[39m
+
     dara format <filename.dara>
-[33m
 

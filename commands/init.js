@@ -3,13 +3,12 @@
 const path = require('path');
 const fs = require('fs');
 
-const {
-  readline
-} = require('../lib/util');
+const colors = require('colors/safe');
 
-const printer = require('../lib/printer');
+const { readline } = require('../lib/util');
 const Command = require('../lib/command');
 const helper = require('../lib/helper');
+const { fixed } = require('../lib/layout');
 
 class InitCommand extends Command {
   constructor() {
@@ -31,15 +30,15 @@ class InitCommand extends Command {
   }
 
   usage() {
-    printer.println(printer.fgYellow);
-    printer.println('Usage:');
-    printer.println(printer.reset);
-    printer.println('    dara init -s <DaraFileSourceDir>');
-    printer.println(printer.fgYellow);
-    printer.println('Options:');
-    printer.println(printer.reset);
-    printer.print('    ').fixed('sourceDir', 9).fixed(' : ', 3).fixed('optional').println();
-    printer.println();
+    console.log();
+    console.log(colors.yellow('Usage:'));
+    console.log();
+    console.log('    dara init -s <DaraFileSourceDir>');
+    console.log();
+    console.log(colors.yellow('Options:'));
+    console.log();
+    console.log(`    ${fixed('sourceDir', 9)} : ${fixed('optional')}`);
+    console.log();
   }
 
   async exec(args, options) {
@@ -60,7 +59,9 @@ class InitCommand extends Command {
 
       obj['main'] = await readline('main entry: ', obj['main']);
     } catch (err) {
-      printer.error('Init Cancled!');
+      console.log();
+      console.log(colors.red('Init Cancled!'));
+      console.log();
       process.exit(-1);
     }
 

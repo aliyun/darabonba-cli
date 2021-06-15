@@ -3,11 +3,14 @@
 const fs = require('fs');
 const path = require('path');
 
+const colors = require('colors/safe');
 const DSL = require('@darabonba/parser');
+
 const Command = require('../lib/command');
-const printer = require('../lib/printer');
 const helper = require('../lib/helper');
 const config = require('../lib/config');
+const { fixed } = require('../lib/layout');
+
 const generatorNameMap = config.generatorNameMap;
 const generatorMap = {
   cs: require('@darabonba/csharp-generator'),
@@ -42,7 +45,9 @@ function generateCode(options) {
   const dsl = fs.readFileSync(filePath, 'utf8');
   const ast = DSL.parse(dsl, filePath);
   if (config.exec === true && !helper.isExecutable(ast)) {
-    printer.error(`There is no static main function in dara, exec option can't be used!`);
+    console.log();
+    console.log(colors.red(`There is no static main function in dara, exec option can't be used!`));
+    console.log();
     process.exit(-1);
   }
   generator.visit(ast);
@@ -86,17 +91,17 @@ class CodegenCommand extends Command {
 
 
   usage() {
-    printer.println(printer.fgYellow);
-    printer.println('Usage:');
-    printer.println(printer.reset);
-    printer.println('    dara codegen <lang> <outputDir> <sourceDir>');
-    printer.println(printer.fgYellow);
-    printer.println('Arguments:');
-    printer.println(printer.reset);
-    printer.print('    ').fixed('lang', 11).fixed(' : ', 3).fixed('required').println();
-    printer.print('    ').fixed('outputDir', 11).fixed(' : ', 3).fixed('required').println();
-    printer.print('    ').fixed('sourceDir', 11).fixed(' : ', 3).fixed('optional').println();
-    printer.println();
+    console.log();
+    console.log(colors.yellow('Usage:'));
+    console.log();
+    console.log('    dara codegen <lang> <outputDir> <sourceDir>');
+    console.log();
+    console.log(colors.yellow('Arguments:'));
+    console.log();
+    console.log(`    ${fixed('lang', 11)} : ${fixed('required')}`);
+    console.log(`    ${fixed('outputDir', 11)} : ${fixed('required')}`);
+    console.log(`    ${fixed('sourceDir', 11)} : ${fixed('optional')}`);
+    console.log();
   }
 
   async exec(args, options) {
@@ -110,7 +115,9 @@ class CodegenCommand extends Command {
     const pkg = JSON.parse(pkgContent);
 
     if (pkg.mode === 'interface') {
-      printer.error(`The package is interface mode, the SDK can not be generated`);
+      console.log();
+      console.log(colors.red(`The package is interface mode, the SDK can not be generated`));
+      console.log();
       process.exit(-1);
     }
 
@@ -127,10 +134,10 @@ class CodegenCommand extends Command {
     }
 
     if (notSupported) {
-      printer.error(
-        `The language '${lang}' not supported.`,
-        `Only support languages: [${helper.supportedLang(config.codegen)}] `
-      );
+      console.log();
+      console.log(colors.red(`The language '${lang}' not supported.`));
+      console.log(colors.red(`Only support languages: [${helper.supportedLang(config.codegen)}]`));
+      console.log();
       process.exit(-1);
     }
 

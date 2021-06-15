@@ -1,7 +1,9 @@
 'use strict';
 
+const colors = require('colors/safe');
+
 const Command = require('../lib/command');
-const printer = require('../lib/printer');
+
 const {
   requestHandler,
 } = require('../lib/util.js');
@@ -24,12 +26,12 @@ class InfoCommand extends Command {
   }
 
   usage() {
-    printer.println(printer.fgYellow);
-    printer.println('Usage:');
-    printer.println(printer.reset);
-    printer.println('    dara info <scope:moduleName>');
-    printer.println('    dara info <scope:moduleName:version>');
-    printer.println();
+    console.log();
+    console.log(colors.yellow('Usage:'));
+    console.log();
+    console.log('    dara info <scope:moduleName>');
+    console.log('    dara info <scope:moduleName:version>');
+    console.log();
   }
 
   async exec(args, options, argv) {
@@ -48,31 +50,30 @@ class InfoCommand extends Command {
     if (data.ok) {
       const { moduleInfo } = data;
       const pkgInfo = JSON.parse(decodeURIComponent(moduleInfo.darafile));
-      printer.println(`${printer.fgGreen}${moduleInfo.scope}:` +
-        `${moduleInfo.name}: ${moduleInfo.version} ${printer.reset} info:`);
-      printer.println('');
-      printer.println(`- main: ${printer.fgYellow}${pkgInfo.main}${printer.reset}`);
-      printer.println('');
-      printer.println('- dist:');
-      printer.println(`-   tarball: ${printer.fgBlue}${moduleInfo.dist_tarball} ${printer.reset}`);
-      printer.println(`-   shasum:  ${printer.fgBlue}${moduleInfo.dist_shasum} ${printer.reset}`);
-      printer.println('');
+      console.log(`${colors.green(`${moduleInfo.scope}:${moduleInfo.name}: ${moduleInfo.version}`)} info:`);
+      console.log('');
+      console.log(`- main: ${colors.yellow(pkgInfo.main)}`);
+      console.log('');
+      console.log('- dist:');
+      console.log(`-   tarball: ${colors.blue(moduleInfo.dist_tarball)}`);
+      console.log(`-   shasum:  ${colors.blue(moduleInfo.dist_shasum)}`);
+      console.log('');
       if (pkgInfo.libraries instanceof Object) {
         let keys = Object.keys(pkgInfo.libraries);
         if (keys.length > 0) {
-          printer.println('- libraries:');
+          console.log('- libraries:');
           keys.forEach(key => {
-            printer.println(`-    ${printer.fgMagenta} ${key}: darafile.libariries ${printer.reset}`);
+            console.log(`-    ${colors.magenta(`${key}: darafile.libariries`)}`);
           });
-          printer.println('');
+          console.log('');
         }
       }
 
-      printer.println('- maintainers:');
+      console.log('- maintainers:');
       moduleInfo.maintainers.forEach(maintainer => {
-        printer.println(`-    ${printer.fgCyan} ${maintainer} ${printer.reset}`);
+        console.log(`-    ${colors.cyan(maintainer)} `);
       });
-      printer.println('');
+      console.log('');
       process.exit(0);
     }
   }
