@@ -9,18 +9,18 @@ exports.dara = async (cmd, opts = {}) => {
   cmd = [dara].concat(cmd);
   opts.env = opts.env || process.env;
   let execNode = opts.execNode || nodeBin;
-  let stdout = '';
-  let stderr = '';
+  let stdout = [];
+  let stderr = [];
   let child = spawn(execNode, cmd, opts);
   if (child.stderr) {
     child.stderr.on('data', (chunk) => {
-      stderr += chunk.toString();
+      stderr.push(chunk);
     });
   }
 
   if (child.stdout) {
     child.stdout.on('data', (chunk) => {
-      stdout += chunk.toString();
+      stdout.push(chunk);
     });
   }
 
@@ -32,8 +32,8 @@ exports.dara = async (cmd, opts = {}) => {
     child.on('close', (code) => {
       resolve({
         code,
-        stdout,
-        stderr
+        stdout: Buffer.concat(stdout).toString(),
+        stderr: Buffer.concat(stderr).toString()
       });
     });
   });

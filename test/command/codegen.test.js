@@ -1,7 +1,8 @@
 'use strict';
 
+const assert = require('assert');
+
 const command = require('../command');
-const expect = require('expect.js');
 const path = require('path');
 const fs = require('fs');
 const { promisify } = require('util');
@@ -26,38 +27,38 @@ describe('codegen command should ok', function () {
 
   it(`codegen with no language should be error`, async function () {
     const { code, stdout } = await command.dara(['codegen']);
-    expect(code).to.be(255);
-    expect(stdout).contain('Required argument : lang');
+    assert.deepStrictEqual(code, 255);
+    assert.ok(stdout.indexOf('Required argument : lang') !== -1);
   });
 
   it(`codegen with no outputDir should be error`, async function () {
     const { code, stdout } = await command.dara(['codegen', 'ts']);
-    expect(code).to.be(255);
-    expect(stdout).contain('Required argument : outputDir');
+    assert.deepStrictEqual(code, 255);
+    assert.ok(stdout.indexOf('Required argument : outputDir') !== -1);
   });
 
   it(`codegen with interface daraFile should be error`, async function () {
     const { code, stdout } = await command.dara(['codegen', 'ts', path.join(outputPath, 'ts'), interfaceDaraPath]);
-    expect(code).to.be(255);
-    expect(stdout).contain('The package is interface mode, the SDK can not be generated');
+    assert.deepStrictEqual(code, 255);
+    assert.ok(stdout.indexOf('The package is interface mode, the SDK can not be generated') !== -1);
   });
 
   it(`codegen with not supported language should be error`, async function () {
     const outputLanguagePath = path.join(outputPath, 'invalid_language');
     const { code, stdout } = await command.dara(['codegen', 'invalid_language', outputLanguagePath, daraPath]);
-    expect(code).to.be(255);
-    expect(stdout).contain(`The language 'invalid_language' not supported.`);
+    assert.deepStrictEqual(code, 255);
+    assert.ok(stdout.indexOf(`The language 'invalid_language' not supported.`) !== -1);
   });
 
   for (const language in generateLanguageMap) {
     if (generateLanguageMap[language]) {
       it(`codegen ${language} sdk should be ok with valid dara file`, async function () {
         const { code } = await command.dara(['codegen', language, path.join(outputPath, language), daraPath]);
-        expect(code).to.be(0);
+        assert.deepStrictEqual(code, 0);
         const files = generateLanguageMap[language];
         for (const file of files) {
           const exist = await exists(path.join(outputPath, language, file));
-          expect(exist).to.be(true);
+          assert.deepStrictEqual(exist, true);
         }
       });
     }

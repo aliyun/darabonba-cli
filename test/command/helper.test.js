@@ -1,14 +1,13 @@
 'use strict';
 
 const assert = require('assert');
-const expect = require('expect.js');
 
 const command = require('../command');
 
 describe('helper command should ok', function () {
   it('helper a dara file should be ok', async function () {
     const { code, stdout } = await command.dara(['help']);
-    expect(code).to.be(0);
+    assert.deepStrictEqual(code, 0);
     const version = require('../../package.json').version;
     assert.deepStrictEqual(stdout, `
 The CLI for Darabonba \u001b[32m${version}\u001b[39m
