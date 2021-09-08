@@ -20,7 +20,7 @@ class HelpCommand extends Command {
 
   async exec(args, options, _, app) {
     console.log();
-    console.log(colors.white(packageInfo.description) + ' ' + colors.green(packageInfo.version));
+    console.log(`${packageInfo.description} ${colors.green(packageInfo.version)}`);
     console.log();
     console.log(colors.yellow('Usage:'));
     console.log();
