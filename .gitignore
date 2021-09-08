@@ -2,6 +2,8 @@ node_modules/
 .nyc_output/
 coverage/
 test/output/
+test/fixture/codegen/template/csharp/core/bin/
+test/fixture/codegen/template/csharp/core/obj/
 .DS_store
 Teafile
 Darafile

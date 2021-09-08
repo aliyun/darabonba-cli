@@ -1,22 +1,23 @@
 'use strict';
 
-const expect = require('expect.js');
+const assert = require('assert');
 const path = require('path');
 const rewire = require('rewire');
+
 const helper = rewire('../../lib/helper');
 
 describe('helper lib should ok', function () {
   it('_upperFirst should be ok', async function () {
     const _upperFirst = helper.__get__('_upperFirst');
-    expect(_upperFirst('test')).to.be('Test');
-    expect(_upperFirst('test-string')).to.be('Test_string');
+    assert.deepStrictEqual(_upperFirst('test'), 'Test');
+    assert.deepStrictEqual(_upperFirst('test-string'), 'Test_string');
   });
 
   it('getDarafile should be ok', async function () {
     const getDarafile = helper.__get__('getDarafile');
-    expect(getDarafile(__dirname)).to.be(path.join(__dirname, 'Darafile'));
+    assert.deepStrictEqual(getDarafile(__dirname), path.join(__dirname, 'Darafile'));
     const TeaDirPath = path.join(__dirname,'../fixture/helper');
-    expect(getDarafile(TeaDirPath)).to.be(path.join(TeaDirPath, 'Teafile'));
+    assert.deepStrictEqual(getDarafile(TeaDirPath), path.join(TeaDirPath, 'Teafile'));
   });
 
   it('supportedLang should be ok', async function () {
@@ -29,7 +30,7 @@ describe('helper lib should ok', function () {
       php: [],
       py: ['python']
     };
-    expect(supportedLang(codegen)).to.be('ts, cs, java, go, php, py');
+    assert.deepStrictEqual(supportedLang(codegen), 'ts, cs, java, go, php, py');
   });
 
 });

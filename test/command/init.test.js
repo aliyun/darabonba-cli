@@ -1,7 +1,6 @@
 'use strict';
 
 // const command = require('../command');
-// const expect = require('expect.js');
 // const path = require('path');
 // const fs = require('fs');
 // const spawn = require('child_process').spawn;
