@@ -12,6 +12,7 @@ const generateLanguageMap = {
   python: ['darabonba_sdk/client.py'],
   python2: ['darabonba_sdk/client.py'],
   java: ['src/main/java/com/darabonba/test/Client.java'],
+  'java-async': ['src/main/java/com/darabonba/test/DefaultAsyncClient.java'],
   php: ['Client.php'],
   golang: ['client/client.go', 'go.mod'],
   csharp: ['core/client.csproj', 'core/Client.cs'],
