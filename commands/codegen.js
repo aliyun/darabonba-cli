@@ -17,6 +17,7 @@ const generatorMap = {
   ts: require('@darabonba/typescript-generator'),
   go: require('@darabonba/go-generator'),
   java: require('@darabonba/java-generator'),
+  'java-async': require('@darabonba/java-async-generator'),
   php: require('@darabonba/php-generator'),
   py: require('@darabonba/python-generator'),
   py2: require('@darabonba/python-generator'),
