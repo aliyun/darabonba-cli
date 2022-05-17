@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const colors = require('colors/safe');
+const chalk = require('chalk');
 const DSL = require('@darabonba/parser');
 
 const Command = require('../lib/command');
@@ -47,7 +47,7 @@ function generateCode(options) {
   const ast = DSL.parse(dsl, filePath);
   if (config.exec === true && !helper.isExecutable(ast)) {
     console.log();
-    console.log(colors.red(`There is no static main function in dara, exec option can't be used!`));
+    console.log(chalk.red(`There is no static main function in dara, exec option can't be used!`));
     console.log();
     process.exit(-1);
   }
@@ -93,11 +93,11 @@ class CodegenCommand extends Command {
 
   usage() {
     console.log();
-    console.log(colors.yellow('Usage:'));
+    console.log(chalk.yellow('Usage:'));
     console.log();
     console.log('    dara codegen <lang> <outputDir> <sourceDir>');
     console.log();
-    console.log(colors.yellow('Arguments:'));
+    console.log(chalk.yellow('Arguments:'));
     console.log();
     console.log(`    ${fixed('lang', 11)} : ${fixed('required')}`);
     console.log(`    ${fixed('outputDir', 11)} : ${fixed('required')}`);
@@ -117,7 +117,7 @@ class CodegenCommand extends Command {
 
     if (pkg.mode === 'interface') {
       console.log();
-      console.log(colors.red(`The package is interface mode, the SDK can not be generated`));
+      console.log(chalk.red(`The package is interface mode, the SDK can not be generated`));
       console.log();
       process.exit(-1);
     }
@@ -136,8 +136,8 @@ class CodegenCommand extends Command {
 
     if (notSupported) {
       console.log();
-      console.log(colors.red(`The language '${lang}' not supported.`));
-      console.log(colors.red(`Only support languages: [${helper.supportedLang(config.codegen)}]`));
+      console.log(chalk.red(`The language '${lang}' not supported.`));
+      console.log(chalk.red(`Only support languages: [${helper.supportedLang(config.codegen)}]`));
       console.log();
       process.exit(-1);
     }

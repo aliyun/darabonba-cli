@@ -3,7 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const colors = require('colors/safe');
+const chalk = require('chalk');
 
 const { readline } = require('../lib/util');
 const Command = require('../lib/command');
@@ -31,11 +31,11 @@ class InitCommand extends Command {
 
   usage() {
     console.log();
-    console.log(colors.yellow('Usage:'));
+    console.log(chalk.yellow('Usage:'));
     console.log();
     console.log('    dara init -s <DaraFileSourceDir>');
     console.log();
-    console.log(colors.yellow('Options:'));
+    console.log(chalk.yellow('Options:'));
     console.log();
     console.log(`    ${fixed('sourceDir', 9)} : ${fixed('optional')}`);
     console.log();
@@ -60,7 +60,7 @@ class InitCommand extends Command {
       obj['main'] = await readline('main entry: ', obj['main']);
     } catch (err) {
       console.log();
-      console.log(colors.red('Init Cancled!'));
+      console.log(chalk.red('Init Cancled!'));
       console.log();
       process.exit(-1);
     }

@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 
 // thirds
-const colors = require('colors/safe');
+const chalk = require('chalk');
 const Darabonba = require('@darabonba/parser');
 
 // locals
@@ -37,12 +37,12 @@ class CheckCommand extends Command {
     Darabonba.parse(source, filePath);
 
     console.log();
-    console.log(colors.green('Check success!'));
+    console.log(chalk.green('Check success!'));
     console.log();
   }
 
   usage() {
-    console.log(colors.yellow('Usage:'));
+    console.log(chalk.yellow('Usage:'));
     console.log();
     console.log('    dara check <filename.dara>');
     console.log();

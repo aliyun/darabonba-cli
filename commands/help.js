@@ -1,6 +1,6 @@
 'use strict';
 
-const colors = require('colors/safe');
+const chalk = require('chalk');
 
 const Command = require('../lib/command');
 const { fixed } = require('../lib/layout');
@@ -20,13 +20,13 @@ class HelpCommand extends Command {
 
   async exec(args, options, _, app) {
     console.log();
-    console.log(`${packageInfo.description} ${colors.green(packageInfo.version)}`);
+    console.log(`${packageInfo.description} ${chalk.green(packageInfo.version)}`);
     console.log();
-    console.log(colors.yellow('Usage:'));
+    console.log(chalk.yellow('Usage:'));
     console.log();
     console.log(`    dara <command> [<args>]`);
     console.log();
-    console.log(colors.yellow('Available commands:'));
+    console.log(chalk.yellow('Available commands:'));
     console.log();
 
     const commands = app.commands;
@@ -48,7 +48,7 @@ class HelpCommand extends Command {
       console.log(title);
       commands.forEach((cmd) => {
         const {name, desc} = cmd.config;
-        console.log(`    ${colors.green(fixed(name, maxCommandNameLength))}    ${desc}`);
+        console.log(`    ${chalk.green(fixed(name, maxCommandNameLength))}    ${desc}`);
       });
       console.log();
     });

@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 const debug = require('debug')('dara:publish');
-const colors = require('colors/safe');
+const chalk = require('chalk');
 const {
   PublishModuleObject,
 } = require('@darabonba/repo-client');
@@ -41,7 +41,7 @@ class PublishCommand extends Command {
   async exec() {
     this.publish().catch((err) => {
       console.log();
-      console.log(colors.red(err.stack));
+      console.log(chalk.red(err.stack));
       console.log();
       process.exit(-1);
     });
@@ -53,7 +53,7 @@ class PublishCommand extends Command {
     // Check the Teafile
     if (!fs.existsSync(pkgFilePath)) {
       console.log();
-      console.log(colors.red('The Teafile does not exist'));
+      console.log(chalk.red('The Teafile does not exist'));
       console.log();
       process.exit(-1);
     }
@@ -61,8 +61,8 @@ class PublishCommand extends Command {
     const { scope, name, version } = moduleAst.getPkg();
     if (!scope || !name || !version) {
       console.log();
-      console.log(colors.red('The contents of the Teafile are incomplete.'));
-      console.log(colors.red('You can use `dara init` to initialize the file contents.'));
+      console.log(chalk.red('The contents of the Teafile are incomplete.'));
+      console.log(chalk.red('You can use `dara init` to initialize the file contents.'));
       console.log();
       this.process.exit(-1);
     }
@@ -71,11 +71,11 @@ class PublishCommand extends Command {
     const tgzFileName = `${scope}-${name}-${version}.tgz`;
     const tgzFilePath = path.join(pkgDir, tgzFileName);
 
-    console.log(colors.blue(`Packing the package(${scope}-${name}-${version})`));
+    console.log(chalk.blue(`Packing the package(${scope}-${name}-${version})`));
     await pack(moduleAst.getPkg(), pkgDir);
     let tgzFileStream = fs.createReadStream(tgzFilePath);
     const { size } = fs.statSync(tgzFilePath);
-    console.log(colors.blue('uploading the pack file'));
+    console.log(chalk.blue('uploading the pack file'));
     let fileInfo = new FileField({
       filename: tgzFileName,
       contentType: 'application/x-gzip',
@@ -96,7 +96,7 @@ class PublishCommand extends Command {
     let data = await client.publishModule(moduleInfo);
     if (data.ok) {
       console.log();
-      console.log(colors.green('Publish successfully!'));
+      console.log(chalk.green('Publish successfully!'));
       console.log();
       fs.unlinkSync(tgzFilePath);
       process.exit(0);
@@ -105,7 +105,7 @@ class PublishCommand extends Command {
 
   usage() {
     console.log();
-    console.log(colors.yellow('Usage:'));
+    console.log(chalk.yellow('Usage:'));
     console.log();
     console.log('    dara publish');
     console.log();

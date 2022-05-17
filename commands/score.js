@@ -3,7 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const colors = require('colors/safe');
+const chalk = require('chalk');
 
 const Command = require('../lib/command');
 const AstUtil = require('../lib/ast_util');
@@ -34,7 +34,7 @@ class ScoreCommand extends Command {
   async exec() {
     this.getScore().catch((err) => {
       console.log();
-      console.log(colors.red(err.stack));
+      console.log(chalk.red(err.stack));
       console.log();
       process.exit(-1);
     });
@@ -45,7 +45,7 @@ class ScoreCommand extends Command {
     const pkgFilePath = path.join(pkgDir, PKG_FILE);
     if (!fs.existsSync(pkgFilePath)) {
       console.log();
-      console.log(colors.red(`This folder is not a Darabonba package project(No Darafile exist)`));
+      console.log(chalk.red(`This folder is not a Darabonba package project(No Darafile exist)`));
       console.log();
       process.exit(-1);
     }
@@ -53,8 +53,8 @@ class ScoreCommand extends Command {
     const { scope, name, version } = moduleAst.getPkg();
     if (!scope || !name || !version) {
       console.log();
-      console.log(colors.red('The contents of the Darafile are incomplete.'));
-      console.log(colors.red('You can use `dara init` to initialize the file contents.'));
+      console.log(chalk.red('The contents of the Darafile are incomplete.'));
+      console.log(chalk.red('You can use `dara init` to initialize the file contents.'));
       console.log();
       this.process.exit(-1);
     }
@@ -87,11 +87,11 @@ class ScoreCommand extends Command {
 
   printScore(title, score) {
     if (score > 80) {
-      process.stdout.write(colors.green(`${title}${score}`));
+      process.stdout.write(chalk.green(`${title}${score}`));
     } else if (score > 60) {
-      process.stdout.write(colors.yellow(`${title}${score}`));
+      process.stdout.write(chalk.yellow(`${title}${score}`));
     } else {
-      process.stdout.write(colors.red(`${title}${score}`));
+      process.stdout.write(chalk.red(`${title}${score}`));
     }
   }
 
@@ -152,7 +152,7 @@ class ScoreCommand extends Command {
 
   usage() {
     console.log();
-    console.log(colors.yellow('Usage:'));
+    console.log(chalk.yellow('Usage:'));
     console.log();
     console.log('    dara score');
     console.log();

@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const colors = require('colors/safe');
+const chalk = require('chalk');
 const Darabonba = require('@darabonba/parser');
 
 const Command = require('../lib/command');
@@ -28,7 +28,7 @@ class FormatCommand extends Command {
 
   usage() {
     console.log();
-    console.log(colors.yellow('Usage:'));
+    console.log(chalk.yellow('Usage:'));
     console.log();
     console.log('    dara format <filename.dara>');
     console.log();
