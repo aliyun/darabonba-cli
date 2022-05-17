@@ -4,7 +4,7 @@ const fs = require('fs');
 const os = require('os');
 const child_process = require('child_process');
 
-const colors = require('colors/safe');
+const chalk = require('chalk');
 const debug = require('debug')('dara:config');
 
 const Command = require('../lib/command');
@@ -49,7 +49,7 @@ class ConfigCommand extends Command {
 
   usage() {
     console.log();
-    console.log(colors.yellow('Usage:'));
+    console.log(chalk.yellow('Usage:'));
     console.log();
     console.log('    dara config set <key> <value>');
     console.log('    dara config get [<key>]');
@@ -105,7 +105,7 @@ class ConfigCommand extends Command {
     config[key] = value;
     this.saveConfig(config);
     console.log();
-    console.log(colors.green('Update successfully!'));
+    console.log(chalk.green('Update successfully!'));
     console.log();
     debug(`Saved config to ${this.daraConfigFile}`);
   }
@@ -125,7 +125,7 @@ class ConfigCommand extends Command {
     delete config[key];
     this.saveConfig(config);
     console.log();
-    console.log(colors.green('Delete successfully!'));
+    console.log(chalk.green('Delete successfully!'));
     console.log();
     debug(`Updated config to ${this.daraConfigFile}`);
   }
@@ -162,7 +162,7 @@ class ConfigCommand extends Command {
     }
 
     console.log();
-    console.log(colors.red('No program found to open this file'));
+    console.log(chalk.red('No program found to open this file'));
     console.log();
   }
 }

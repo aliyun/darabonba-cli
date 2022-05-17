@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 
-const colors = require('colors/safe');
+const chalk = require('chalk');
 const { UserObject } = require('@darabonba/repo-client');
 
 const {
@@ -48,7 +48,7 @@ class LoginCommand extends Command {
       });
     } catch (err) {
       console.log();
-      console.log(colors.red('Login Cancled!'));
+      console.log(chalk.red('Login Cancled!'));
       console.log();
       process.exit(-1);
     }
@@ -64,7 +64,7 @@ class LoginCommand extends Command {
       obj['password'] = aesEncrypt(obj['password']);
       fs.writeFileSync(DARA_CONFIG_FILE, JSON.stringify(obj, null, 2));
       console.log();
-      console.log(colors.green('Login Successfully!'));
+      console.log(chalk.green('Login Successfully!'));
       console.log();
     }
   }
@@ -72,7 +72,7 @@ class LoginCommand extends Command {
   async exec() {
     this.login().catch((err) => {
       console.log();
-      console.log(colors.red(err.stack));
+      console.log(chalk.red(err.stack));
       console.log();
       process.exit(-1);
     });
@@ -80,7 +80,7 @@ class LoginCommand extends Command {
 
   usage() {
     console.log();
-    console.log(colors.yellow('Usage:'));
+    console.log(chalk.yellow('Usage:'));
     console.log();
     console.log('    dara login');
     console.log('    dara adduser');

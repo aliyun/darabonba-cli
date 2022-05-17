@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 
 // thirds
-const colors = require('colors/safe');
+const chalk = require('chalk');
 const Darabonba = require('@darabonba/parser');
 // locals
 const Command = require('../lib/command');
@@ -48,8 +48,8 @@ class BuildCommand extends Command {
       }
       fs.writeFileSync(options.output, JSON.stringify(ast, null, 2));
       console.log();
-      console.log(colors.green('Built successfully!'));
-      console.log(colors.green('Save Path : ' + path.resolve(options.output)));
+      console.log(chalk.green('Built successfully!'));
+      console.log(chalk.green('Save Path : ' + path.resolve(options.output)));
       console.log();
     } else {
       console.log();
@@ -60,11 +60,11 @@ class BuildCommand extends Command {
 
   usage() {
     console.log();
-    console.log(colors.yellow('Usage:'));
+    console.log(chalk.yellow('Usage:'));
     console.log();
     console.log('    dara build -f <filename.dara> -o <outputAstFile>');
     console.log();
-    console.log(colors.yellow('Options:'));
+    console.log(chalk.yellow('Options:'));
     console.log();
     console.log(`    ${fixed('filename', 11)} : ${fixed('required')}`);
     console.log(`    ${fixed('output', 11)} : ${fixed('optional')}`);

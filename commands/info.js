@@ -1,6 +1,6 @@
 'use strict';
 
-const colors = require('colors/safe');
+const chalk = require('chalk');
 
 const Command = require('../lib/command');
 
@@ -27,7 +27,7 @@ class InfoCommand extends Command {
 
   usage() {
     console.log();
-    console.log(colors.yellow('Usage:'));
+    console.log(chalk.yellow('Usage:'));
     console.log();
     console.log('    dara info <scope:moduleName>');
     console.log('    dara info <scope:moduleName:version>');
@@ -50,20 +50,20 @@ class InfoCommand extends Command {
     if (data.ok) {
       const { moduleInfo } = data;
       const pkgInfo = JSON.parse(decodeURIComponent(moduleInfo.darafile));
-      console.log(`${colors.green(`${moduleInfo.scope}:${moduleInfo.name}: ${moduleInfo.version}`)} info:`);
+      console.log(`${chalk.green(`${moduleInfo.scope}:${moduleInfo.name}: ${moduleInfo.version}`)} info:`);
       console.log('');
-      console.log(`- main: ${colors.yellow(pkgInfo.main)}`);
+      console.log(`- main: ${chalk.yellow(pkgInfo.main)}`);
       console.log('');
       console.log('- dist:');
-      console.log(`-   tarball: ${colors.blue(moduleInfo.dist_tarball)}`);
-      console.log(`-   shasum:  ${colors.blue(moduleInfo.dist_shasum)}`);
+      console.log(`-   tarball: ${chalk.blue(moduleInfo.dist_tarball)}`);
+      console.log(`-   shasum:  ${chalk.blue(moduleInfo.dist_shasum)}`);
       console.log('');
       if (pkgInfo.libraries instanceof Object) {
         let keys = Object.keys(pkgInfo.libraries);
         if (keys.length > 0) {
           console.log('- libraries:');
           keys.forEach(key => {
-            console.log(`-    ${colors.magenta(`${key}: darafile.libariries`)}`);
+            console.log(`-    ${chalk.magenta(`${key}: darafile.libariries`)}`);
           });
           console.log('');
         }
@@ -71,7 +71,7 @@ class InfoCommand extends Command {
 
       console.log('- maintainers:');
       moduleInfo.maintainers.forEach(maintainer => {
-        console.log(`-    ${colors.cyan(maintainer)} `);
+        console.log(`-    ${chalk.cyan(maintainer)} `);
       });
       console.log('');
       process.exit(0);

@@ -1,6 +1,6 @@
 'use strict';
 
-const colors = require('colors/safe');
+const chalk = require('chalk');
 
 const Command = require('../lib/command');
 const {
@@ -34,7 +34,7 @@ class UnpublishCommand extends Command {
 
   usage() {
     console.log();
-    console.log(colors.yellow('Usage:'));
+    console.log(chalk.yellow('Usage:'));
     console.log();
     console.log('    dara unpublish <scope:moduleName:version>');
     console.log('    dara unpublish <scope:moduleName> -f');
@@ -45,7 +45,7 @@ class UnpublishCommand extends Command {
     let moduleInfo = args.moduleInfo.split(':');
     if (moduleInfo.length < 2) {
       console.log();
-      console.log(colors.red('Bad augument: moduleInfo'));
+      console.log(chalk.red('Bad augument: moduleInfo'));
       console.log();
       this.usage();
       process.exit(-1);
@@ -55,7 +55,7 @@ class UnpublishCommand extends Command {
     if (!version) {
       if (!options.force) {
         console.log();
-        console.log(colors.red('Bad augument: delete all module versions need -f to force delete!'));
+        console.log(chalk.red('Bad augument: delete all module versions need -f to force delete!'));
         console.log();
         this.usage();
         process.exit(-1);
@@ -66,7 +66,7 @@ class UnpublishCommand extends Command {
     }
     if (data.ok) {
       console.log();
-      console.log(colors.green('Unpublish successfully!'));
+      console.log(chalk.green('Unpublish successfully!'));
       console.log();
     }
   }

@@ -5,7 +5,7 @@ const fs = require('fs');
 const tar = require('tar');
 const crypto = require('crypto');
 
-const colors = require('colors/safe');
+const chalk = require('chalk');
 const { DownloadModuleObject } = require('@darabonba/repo-client');
 
 const { request, requestHandler } = require('../lib/util');
@@ -85,7 +85,7 @@ async function downloadModules(ctx, rootDir, downloadList) {
 
     if (moduleInfo.dist_shasum !== shasum) {
       console.log();
-      console.log(colors.red(`Bad Download File: ${moduleInfo.version} the download module check shasum error!`));
+      console.log(chalk.red(`Bad Download File: ${moduleInfo.version} the download module check shasum error!`));
       console.log();
       process.exit(-1);
     }
@@ -126,7 +126,7 @@ async function getLibsFromTeaFile(ctx, pwd) {
   const pkg = JSON.parse(pkgContent);
   const libraries = pkg.libraries || {};
   const aliasIds = Object.keys(libraries);
-  console.log(colors.blue(`${pkgPath} found ${aliasIds.length} libraries`));
+  console.log(chalk.blue(`${pkgPath} found ${aliasIds.length} libraries`));
   let installArr = [];
   aliasIds.forEach((aliasId) => {
     if (!aliasId) {
@@ -135,7 +135,7 @@ async function getLibsFromTeaFile(ctx, pwd) {
 
     const libPath = libraries[aliasId];
     if (libPath.startsWith('./') || libPath.startsWith('../') || libPath.startsWith('/')) {
-      console.log(colors.blue(`found ${aliasId} => ${libPath}`));
+      console.log(chalk.blue(`found ${aliasId} => ${libPath}`));
       ctx.localCount++;
       //local directly overwrite
       ctx.librariesMap[aliasId] = libPath;
@@ -156,7 +156,7 @@ async function getLibsFromTeaFile(ctx, pwd) {
     }
   });
 
-  console.log(colors.blue('fetching from remote repository'));
+  console.log(chalk.blue('fetching from remote repository'));
   return installArr;
 }
 
@@ -226,7 +226,7 @@ class InstallCommand extends Command {
     let pkgPath = path.join(rootDir, PKG_FILE);
     if (!fs.existsSync(pkgPath)) {
       console.log();
-      console.log(colors.red(`This folder is not a Darabonba package project(No Darafile exist)`));
+      console.log(chalk.red(`This folder is not a Darabonba package project(No Darafile exist)`));
       console.log();
       process.exit(-1);
     }
@@ -254,7 +254,7 @@ class InstallCommand extends Command {
           let [, name,] = argv[0].split(':');
           if (!name) {
             console.log();
-            console.log(colors.red(`Unrecognized module path: ${argv[0]}, ` +
+            console.log(chalk.red(`Unrecognized module path: ${argv[0]}, ` +
               `expected module path format: <scope:module[:version]>.`));
             console.log();
             process.exit(-1);
@@ -267,7 +267,7 @@ class InstallCommand extends Command {
         pkg.libraries[moduleName] = argv[0];
         fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
       }
-      console.log(colors.blue(`1 libraries installed.`));
+      console.log(chalk.blue(`1 libraries installed.`));
     } else {
       if (!options.force && fs.existsSync(libraryPath)) {
         let libraryContent = fs.readFileSync(libraryPath);
@@ -281,7 +281,7 @@ class InstallCommand extends Command {
         fs.writeFileSync(lockPath, JSON.stringify(ctx.librariesMap, null, 2));
       }
 
-      console.log(colors.blue(`${ctx.localCount + ctx.remoteCount} libraries installed.` +
+      console.log(chalk.blue(`${ctx.localCount + ctx.remoteCount} libraries installed.` +
         ` (${ctx.localCount} local, ${ctx.remoteCount} remote)`));
       process.exit(0);
     }
@@ -289,7 +289,7 @@ class InstallCommand extends Command {
 
   usage() {
     console.log();
-    console.log(colors.yellow('Usage:'));
+    console.log(chalk.yellow('Usage:'));
     console.log();
     console.log('    dara install');
     console.log('    dara install -f');

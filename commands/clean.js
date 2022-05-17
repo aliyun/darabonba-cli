@@ -3,7 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const colors = require('colors/safe');
+const chalk = require('chalk');
 const Command = require('../lib/command');
 const { delDir } = require('../lib/util');
 const { PKG_FILE } = require('../lib/constants');
@@ -32,7 +32,7 @@ class CleanCommand extends Command {
     const pkgPath = path.join(sourceDir, PKG_FILE);
     if (!fs.existsSync(pkgPath)) {
       console.log();
-      console.log(colors.red(`Not a Darabonba package folder`));
+      console.log(chalk.red(`Not a Darabonba package folder`));
       console.log();
       process.exit(-1);
     }
@@ -40,20 +40,20 @@ class CleanCommand extends Command {
     const libPath = path.join(sourceDir, 'libraries');
     delDir(libPath);
     console.log();
-    console.log(colors.green(`Clean ${libPath} success!`));
+    console.log(chalk.green(`Clean ${libPath} success!`));
     console.log();
     const libLockPath = path.join(sourceDir, '.libraries.json');
     if (fs.existsSync(libLockPath)) {
       fs.unlinkSync(libLockPath);
       console.log();
-      console.log(colors.green(`Clean ${libLockPath} success!`));
+      console.log(chalk.green(`Clean ${libLockPath} success!`));
       console.log();
     }
   }
 
   usage() {
     console.log();
-    console.log(colors.yellow('Usage:'));
+    console.log(chalk.yellow('Usage:'));
     console.log();
     console.log('    dara clean');
     console.log();
