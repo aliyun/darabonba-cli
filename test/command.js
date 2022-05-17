@@ -8,6 +8,7 @@ exports.dara = async (cmd, opts = {}) => {
   const dara = path.join(__dirname, '../bin/dara.js');
   cmd = [dara].concat(cmd);
   opts.env = opts.env || process.env;
+  opts.env['FORCE_COLOR'] = '1';
   let execNode = opts.execNode || nodeBin;
   let stdout = [];
   let stderr = [];
