@@ -17,7 +17,8 @@ const generateLanguageMap = {
   php: ['Client.php'],
   golang: ['client/client.go', 'go.mod'],
   csharp: ['core/client.csproj', 'core/Client.cs'],
-  cpp: ['src/test.cpp', 'include/darabonba/test.hpp']
+  cpp: ['src/test.cpp', 'include/darabonba/test.hpp'],
+  swift: ['Sources/Darabonba_Test/Client.swift']
 };
 
 describe('codegen command should ok', function () {
