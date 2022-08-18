@@ -21,7 +21,8 @@ const generatorMap = {
   php: require('@darabonba/php-generator'),
   py: require('@darabonba/python-generator'),
   py2: require('@darabonba/python-generator'),
-  cpp: require('@darabonba/cpp-generator')
+  cpp: require('@darabonba/cpp-generator'),
+  swift: require('@darabonba/swift-generator'),
 };
 
 function generateCode(options) {
