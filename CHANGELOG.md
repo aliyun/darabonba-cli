@@ -1,5 +1,9 @@
 # ChangeLog
 
+# 1.2.0 - 2022-08-29
+
+> Add Swift generator in `Darabonba CLI`.
+
 # 1.1.8 - 2021-03-01
 
 > sovle overseas user install overtime.
