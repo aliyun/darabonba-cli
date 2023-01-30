@@ -88,7 +88,7 @@ class PublishCommand extends Command {
       darafile: JSON.stringify(moduleAst.getPkg()),
       readme: moduleAst.getReadme(),
       size,
-      dara_ast: JSON.stringify(daraAst),
+      dara_ast: encodeURIComponent(JSON.stringify(daraAst)),
       file: fileInfo
     });
     debug(`Use ${this.options.c} as config file`);
