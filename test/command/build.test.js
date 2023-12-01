@@ -25,7 +25,8 @@ describe('build command should ok', function () {
   it('build ast with invalid filePath should be error', async function () {
     const { code, stdout } = await command.dara(['build', '-f']);
     assert.deepStrictEqual(code, 255);
-    assert.ok(stdout.indexOf('The "path" argument must be of type string') !== -1);
+    assert.ok(stdout.indexOf('Usage:') !== -1);
+    assert.ok(stdout.indexOf('Required option : filename') !== -1);
   });
 
   it('build ast with not exist filePath should be error', async function () {
