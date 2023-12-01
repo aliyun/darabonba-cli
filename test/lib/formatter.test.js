@@ -19,4 +19,16 @@ describe('formatter', function () {
 
 `);
   });
+
+  it('issue #125 should ok', () => {
+    const sourceCode = `static async function main(args: [ string ])throws : void {   var a = args[0]; } `;
+    const ast = Darabonba.parse(sourceCode, '__filename');
+    const formatter = new Formatter();
+    formatter.visit(ast, 0);
+    assert.deepStrictEqual(formatter.output, `static async function main(args: [ string ])throws : void {
+  var a = args[0];
+}
+
+`);
+  });
 });
