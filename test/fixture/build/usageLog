@@ -8,6 +8,6 @@
 
 [33mOptions:[39m
 
-    filename    : required  
-    output      : optional  
+    -f, --filename         : required
+    -o, --output           : optional
 

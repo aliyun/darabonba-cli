@@ -4,6 +4,12 @@ const path = require('path');
 const spawn = require('child_process').spawn;
 const nodeBin = process.env.npm_node_execpath || process.env.NODE || process.execPath;
 
+/**
+ * test dara command
+ * @param {String} cmd command
+ * @param {Object} opts options
+ * @returns
+ */
 exports.dara = async (cmd, opts = {}) => {
   const dara = path.join(__dirname, '../bin/dara.js');
   cmd = [dara].concat(cmd);

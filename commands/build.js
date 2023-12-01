@@ -66,8 +66,8 @@ class BuildCommand extends Command {
     console.log();
     console.log(chalk.yellow('Options:'));
     console.log();
-    console.log(`    ${fixed('filename', 11)} : ${fixed('required')}`);
-    console.log(`    ${fixed('output', 11)} : ${fixed('optional')}`);
+    console.log(`    ${fixed('-f, --filename', 22)} : required`);
+    console.log(`    ${fixed('-o, --output', 22)} : optional`);
     console.log();
   }
 }
