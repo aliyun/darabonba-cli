@@ -8,7 +8,7 @@ const crypto = require('crypto');
 const chalk = require('chalk');
 const { DownloadModuleObject } = require('@darabonba/repo-client');
 
-const { request, requestHandler } = require('../lib/util');
+const { request, newRepoClient } = require('../lib/util');
 const { PKG_FILE, INSTALL_PATH, DARA_CONFIG_FILE } = require('../lib/constants');
 const Command = require('../lib/command');
 
@@ -164,7 +164,8 @@ async function getDownloadList(installArr) {
   let downloadInfo = new DownloadModuleObject({
     specs: installArr.join(',')
   });
-  let data = await requestHandler().downloadModule(downloadInfo);
+  const repo = newRepoClient();
+  let data = await repo.downloadModule(downloadInfo);
   if (data.ok) {
     let downloadList = data.download_list;
     return downloadList;

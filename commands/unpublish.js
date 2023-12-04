@@ -4,7 +4,7 @@ const chalk = require('chalk');
 
 const Command = require('../lib/command');
 const {
-  requestHandler,
+  newRepoClient,
 } = require('../lib/util.js');
 
 class UnpublishCommand extends Command {
@@ -52,6 +52,7 @@ class UnpublishCommand extends Command {
     }
     let [scope, moduleName, version] = moduleInfo;
     let data;
+    const repoClient = newRepoClient();
     if (!version) {
       if (!options.force) {
         console.log();
@@ -60,9 +61,9 @@ class UnpublishCommand extends Command {
         this.usage();
         process.exit(-1);
       }
-      data = await requestHandler().deleteModule(scope, moduleName);
+      data = await repoClient.deleteModule(scope, moduleName);
     } else {
-      data = await requestHandler().deleteModuleVersion(scope, moduleName, version);
+      data = await repoClient.deleteModuleVersion(scope, moduleName, version);
     }
     if (data.ok) {
       console.log();

@@ -12,7 +12,7 @@ const { FileField } = require('@alicloud/tea-fileform');
 
 const Command = require('../lib/command');
 const { pack } = require('../lib/pack');
-const { requestHandler } = require('../lib/util');
+const { newRepoClient } = require('../lib/util');
 const AstUtil = require('../lib/ast_util');
 const {
   PKG_FILE,
@@ -92,7 +92,7 @@ class PublishCommand extends Command {
       file: fileInfo
     });
     debug(`Use ${this.options.c} as config file`);
-    const client = requestHandler(this.options.c);
+    const client = newRepoClient(this.options.c);
     let data = await client.publishModule(moduleInfo);
     if (data.ok) {
       console.log();

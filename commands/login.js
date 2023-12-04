@@ -6,7 +6,7 @@ const chalk = require('chalk');
 const { UserObject } = require('@darabonba/repo-client');
 
 const {
-  requestHandler,
+  newRepoClient,
   aesEncrypt,
   aesDecrypt,
   readline
@@ -58,7 +58,8 @@ class LoginCommand extends Command {
       email: obj['email'],
       password: obj['password']
     });
-    let data = await requestHandler().userLogin(user);
+    const repoClient = newRepoClient();
+    let data = await repoClient.userLogin(user);
     if (data.ok) {
       obj['authToken'] = data.rev;
       obj['password'] = aesEncrypt(obj['password']);

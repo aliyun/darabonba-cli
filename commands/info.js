@@ -5,7 +5,7 @@ const chalk = require('chalk');
 const Command = require('../lib/command');
 
 const {
-  requestHandler,
+  newRepoClient,
 } = require('../lib/util.js');
 
 class InfoCommand extends Command {
@@ -46,36 +46,40 @@ class InfoCommand extends Command {
   }
 
   async getModuleInfo(scope, moduleName, version) {
-    const data = await requestHandler().getModuleInfo(scope, moduleName, version);
-    if (data.ok) {
+    const repoClient = newRepoClient();
+    const data = await repoClient.getModuleInfo(scope, moduleName, version);
+    if (data.ok && data.moduleInfo.darafile) {
       const { moduleInfo } = data;
       const pkgInfo = JSON.parse(decodeURIComponent(moduleInfo.darafile));
-      console.log(`${chalk.green(`${moduleInfo.scope}:${moduleInfo.name}: ${moduleInfo.version}`)} info:`);
+      console.log(`${chalk.green(`${moduleInfo.scope}:${moduleInfo.name}@${moduleInfo.version}`)} info:`);
       console.log('');
-      console.log(`- main: ${chalk.yellow(pkgInfo.main)}`);
+      console.log(`main: ${chalk.yellow(pkgInfo.main)}`);
       console.log('');
-      console.log('- dist:');
-      console.log(`-   tarball: ${chalk.blue(moduleInfo.dist_tarball)}`);
-      console.log(`-   shasum:  ${chalk.blue(moduleInfo.dist_shasum)}`);
+      console.log('dist:');
+      console.log(`.tarball: ${chalk.blue(moduleInfo.dist_tarball)}`);
+      console.log(`.shasum:  ${chalk.blue(moduleInfo.dist_shasum)}`);
       console.log('');
-      if (pkgInfo.libraries instanceof Object) {
+      if (pkgInfo.libraries) {
         let keys = Object.keys(pkgInfo.libraries);
         if (keys.length > 0) {
-          console.log('- libraries:');
+          console.log('libraries:');
           keys.forEach(key => {
-            console.log(`-    ${chalk.magenta(`${key}: darafile.libariries`)}`);
+            console.log(`- ${chalk.magenta(`${key}: darafile.libariries`)}`);
           });
           console.log('');
         }
       }
 
-      console.log('- maintainers:');
+      console.log('maintainers:');
       moduleInfo.maintainers.forEach(maintainer => {
-        console.log(`-    ${chalk.cyan(maintainer)} `);
+        console.log(`- ${chalk.cyan(maintainer)}`);
       });
       console.log('');
       process.exit(0);
     }
+
+    console.log(chalk.red(`the module ${scope}:${moduleName}@${version} isn't exists`));
+    process.exit(1);
   }
 }
 
