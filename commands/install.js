@@ -5,10 +5,11 @@ const fs = require('fs');
 const tar = require('tar');
 const crypto = require('crypto');
 
+const httpx = require('httpx');
 const chalk = require('chalk');
 const { DownloadModuleObject } = require('@darabonba/repo-client');
 
-const { request, newRepoClient } = require('../lib/util');
+const { newRepoClient } = require('../lib/util');
 const { PKG_FILE, INSTALL_PATH, DARA_CONFIG_FILE } = require('../lib/constants');
 const Command = require('../lib/command');
 
@@ -65,10 +66,7 @@ async function downloadModules(ctx, rootDir, downloadList) {
     if (isOverseas()) {
       distTarball = distTarball.replace('oss-cn-zhangjiakou', 'oss-accelerate');
     }
-    let { res } = await request(distTarball, {
-      streaming: true,
-      followRedirect: true,
-    });
+    const res = await httpx.request(distTarball);
     // windows can't support ':' in file path
     let targetDir = path.join(rootDir, INSTALL_PATH, moduleInfo.dist_dir.replace(/:/g, '_'));
     ctx.librariesMap[moduleInfo.version] = path.relative(rootDir, targetDir);
@@ -269,6 +267,7 @@ class InstallCommand extends Command {
         fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
       }
       console.log(chalk.blue(`1 libraries installed.`));
+      process.exit(0);
     } else {
       if (!options.force && fs.existsSync(libraryPath)) {
         let libraryContent = fs.readFileSync(libraryPath);

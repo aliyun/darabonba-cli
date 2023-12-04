@@ -30,15 +30,15 @@
     "@darabonba/php-generator": "^1.1.4",
     "@darabonba/python-generator": "^1.0.7",
     "@darabonba/repo-client": "^1",
-    "@darabonba/typescript-generator": "^1",
     "@darabonba/swift-generator": "^1",
+    "@darabonba/typescript-generator": "^1",
     "chalk": "^4.1.2",
     "debug": "^4.1.1",
+    "httpx": "^2.3.1",
     "minimatch": "^3.0.4",
     "minimist": "^1.2.0",
     "read": "^1.0.7",
-    "tar": "^4.4.10",
-    "urllib": "^2.34.1"
+    "tar": "^4.4.10"
   },
   "devDependencies": {
     "eslint": "^8",
