@@ -3,7 +3,7 @@
 const chalk = require('chalk');
 
 const Command = require('../lib/command');
-const { fixed } = require('../lib/layout');
+const { fixed } = require('../lib/helper');
 
 const packageInfo = require('../package.json');
 

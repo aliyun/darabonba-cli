@@ -7,8 +7,7 @@ const chalk = require('chalk');
 
 const { readline } = require('../lib/util');
 const Command = require('../lib/command');
-const helper = require('../lib/helper');
-const { fixed } = require('../lib/layout');
+const { getDarafile, fixed } = require('../lib/helper');
 
 class InitCommand extends Command {
   constructor() {
@@ -42,7 +41,7 @@ class InitCommand extends Command {
   }
 
   async exec(args, options) {
-    const pkgFilePath = helper.getDarafile(options.sourceDir);
+    const pkgFilePath = getDarafile(options.sourceDir);
     let obj = Object.create(null);
     if (fs.existsSync(pkgFilePath)) {
       var data = fs.readFileSync(pkgFilePath, 'utf8');
