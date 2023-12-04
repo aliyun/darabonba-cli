@@ -9,7 +9,7 @@
     "test": "mocha -t 10000 -R spec test/**/*.test.js",
     "test-cov": "nyc -r=html -r=text -r=lcov npm run test",
     "lint": "eslint --fix bin commands lib test",
-    "ci": "npm run lint && npm run test-cov && codecov"
+    "ci": "npm run lint && npm run test-cov"
   },
   "repository": {
     "type": "git",
@@ -40,15 +40,16 @@
     "urllib": "^2.34.1"
   },
   "devDependencies": {
-    "codecov": "^3.1.0",
-    "eslint": "^6.6.0",
-    "mocha": "^6.2.0",
-    "nyc": "^14.1.1",
-    "rewire": "^5.0.0"
+    "eslint": "^8",
+    "mocha": "^10",
+    "nyc": "^14.1.1"
   },
   "files": [
     "bin",
     "commands",
     "lib"
-  ]
+  ],
+  "engines": {
+    "node": ">= 12"
+  }
 }
