@@ -2,9 +2,8 @@
 
 const Darabonba = require('@darabonba/parser');
 const assert = require('assert');
-const rewire = require('rewire');
 
-const Formatter = rewire('../../lib/formatter');
+const Formatter = require('../../lib/formatter');
 
 describe('formatter', function () {
   it('format for should ok', () => {
