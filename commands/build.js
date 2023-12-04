@@ -9,7 +9,7 @@ const chalk = require('chalk');
 const Darabonba = require('@darabonba/parser');
 // locals
 const Command = require('../lib/command');
-const { fixed } = require('../lib/layout');
+const { fixed } = require('../lib/helper');
 
 class BuildCommand extends Command {
   constructor() {

@@ -7,9 +7,8 @@ const chalk = require('chalk');
 const DSL = require('@darabonba/parser');
 
 const Command = require('../lib/command');
-const helper = require('../lib/helper');
+const { getDarafile, isExecutable, supportedLang, fixed } = require('../lib/helper');
 const config = require('../lib/config');
-const { fixed } = require('../lib/layout');
 
 const generatorNameMap = config.generatorNameMap;
 const generatorMap = {
@@ -46,7 +45,7 @@ function generateCode(options) {
   const filePath = path.join(options.rootDir, options.daraFile);
   const dsl = fs.readFileSync(filePath, 'utf8');
   const ast = DSL.parse(dsl, filePath);
-  if (config.exec === true && !helper.isExecutable(ast)) {
+  if (config.exec === true && !isExecutable(ast)) {
     console.log();
     console.log(chalk.red(`There is no static main function in dara, exec option can't be used!`));
     console.log();
@@ -112,7 +111,7 @@ class CodegenCommand extends Command {
     const sourceDir = args.sourceDir;
 
     const rootDir = sourceDir;
-    const pkgPath = helper.getDarafile(rootDir);
+    const pkgPath = getDarafile(rootDir);
     const pkgContent = fs.readFileSync(pkgPath, 'utf8');
     const pkg = JSON.parse(pkgContent);
 
@@ -138,7 +137,7 @@ class CodegenCommand extends Command {
     if (notSupported) {
       console.log();
       console.log(chalk.red(`The language '${lang}' not supported.`));
-      console.log(chalk.red(`Only support languages: [${helper.supportedLang(config.codegen)}]`));
+      console.log(chalk.red(`Only support languages: [${supportedLang(config.codegen)}]`));
       console.log();
       process.exit(-1);
     }
