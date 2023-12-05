@@ -1,19 +1,14 @@
 'use strict';
 
-const fs = require('fs');
 const os = require('os');
-const util = require('util');
 const child_process = require('child_process');
 
 const chalk = require('chalk');
 const debug = require('debug')('dara:config');
 
 const Command = require('../lib/command');
-const {
-  DARA_CONFIG_FILE
-} = require('../lib/constants');
-const { getDaraConfig } = require('../lib/util');
-const writeFileAsync = util.promisify(fs.writeFile);
+const { DARA_CONFIG_FILE } = require('../lib/constants');
+const { getDaraConfig, saveDaraConfig } = require('../lib/util');
 
 class ConfigCommand extends Command {
   constructor() {
@@ -64,10 +59,6 @@ class ConfigCommand extends Command {
     console.log();
   }
 
-  async saveConfig(config) {
-    await writeFileAsync(this.daraConfigFile, JSON.stringify(config, null, 2));
-  }
-
   async exec(args, options) {
     this.daraConfigFile = options.c;
 
@@ -98,7 +89,7 @@ class ConfigCommand extends Command {
   async set(key, value) {
     const config = await getDaraConfig(this.daraConfigFile);
     config[key] = value;
-    await this.saveConfig(config);
+    await saveDaraConfig(config, this.daraConfigFile);
     console.log();
     console.log(chalk.green('Update successfully!'));
     console.log();
@@ -118,7 +109,7 @@ class ConfigCommand extends Command {
   async delete(key) {
     const config = await getDaraConfig(this.daraConfigFile);
     delete config[key];
-    await this.saveConfig(config);
+    await saveDaraConfig(config, this.daraConfigFile);
     console.log();
     console.log(chalk.green('Delete successfully!'));
     console.log();

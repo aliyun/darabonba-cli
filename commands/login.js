@@ -1,7 +1,5 @@
 'use strict';
 
-const fs = require('fs');
-
 const chalk = require('chalk');
 const { UserObject } = require('@darabonba/repo-client');
 
@@ -9,7 +7,9 @@ const {
   newRepoClient,
   aesEncrypt,
   aesDecrypt,
-  readline
+  readline,
+  getDaraConfig,
+  saveDaraConfig
 } = require('../lib/util');
 const { DARA_CONFIG_FILE } = require('../lib/constants');
 const Command = require('../lib/command');
@@ -21,18 +21,24 @@ class LoginCommand extends Command {
       desc: 'login to repository',
       args: [],
       options: [
+        {
+          name: 'configurePath',
+          short: 'c',
+          mode: 'optional',
+          desc: 'configure file path',
+          default: DARA_CONFIG_FILE
+        }
       ],
     });
   }
 
   async login() {
-    let obj = {};
-    if (fs.existsSync(DARA_CONFIG_FILE)) {
-      obj = JSON.parse(fs.readFileSync(DARA_CONFIG_FILE, 'utf8'));
-      if (obj['password']) {
-        obj['password'] = aesDecrypt(obj['password']);
-      }
+    const obj = await getDaraConfig(this.daraConfigFile);
+
+    if (obj['password']) {
+      obj['password'] = aesDecrypt(obj['password']);
     }
+
     try {
       obj['username'] = await readline('username:', obj['username'], {
         retry: true
@@ -63,14 +69,15 @@ class LoginCommand extends Command {
     if (data.ok) {
       obj['authToken'] = data.rev;
       obj['password'] = aesEncrypt(obj['password']);
-      fs.writeFileSync(DARA_CONFIG_FILE, JSON.stringify(obj, null, 2));
+      await saveDaraConfig(obj, this.daraConfigFile);
       console.log();
       console.log(chalk.green('Login Successfully!'));
       console.log();
     }
   }
 
-  async exec() {
+  async exec(args, options) {
+    this.daraConfigFile = options.c;
     this.login().catch((err) => {
       console.log();
       console.log(chalk.red(err.stack));
