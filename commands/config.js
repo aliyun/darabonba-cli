@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const os = require('os');
+const util = require('util');
 const child_process = require('child_process');
 
 const chalk = require('chalk');
@@ -11,6 +12,8 @@ const Command = require('../lib/command');
 const {
   DARA_CONFIG_FILE
 } = require('../lib/constants');
+const { getDaraConfig } = require('../lib/util');
+const writeFileAsync = util.promisify(fs.writeFile);
 
 class ConfigCommand extends Command {
   constructor() {
@@ -61,16 +64,8 @@ class ConfigCommand extends Command {
     console.log();
   }
 
-  loadConfig() {
-    let config = {};
-    if (fs.existsSync(this.daraConfigFile)) {
-      config = JSON.parse(fs.readFileSync(this.daraConfigFile, 'utf8'));
-    }
-    return config;
-  }
-
-  saveConfig(config) {
-    fs.writeFileSync(this.daraConfigFile, JSON.stringify(config, null, 2));
+  async saveConfig(config) {
+    await writeFileAsync(this.daraConfigFile, JSON.stringify(config, null, 2));
   }
 
   async exec(args, options) {
@@ -85,33 +80,33 @@ class ConfigCommand extends Command {
         this.set(args.key, args.value);
         break;
       case 'get':
-        this.get(args.key);
+        await this.get(args.key);
         break;
       case 'delete':
-        this.delete(args.key);
+        await this.delete(args.key);
         break;
       case 'list':
       case 'ls':
-        this.get();
+        await this.get();
         break;
       case 'edit':
-        this.edit();
+        await this.edit();
         break;
     }
   }
 
-  set(key, value) {
-    const config = this.loadConfig();
+  async set(key, value) {
+    const config = await getDaraConfig(this.daraConfigFile);
     config[key] = value;
-    this.saveConfig(config);
+    await this.saveConfig(config);
     console.log();
     console.log(chalk.green('Update successfully!'));
     console.log();
     debug(`Saved config to ${this.daraConfigFile}`);
   }
 
-  get(key) {
-    const config = this.loadConfig();
+  async get(key) {
+    const config = await getDaraConfig(this.daraConfigFile);
     if (key === undefined) {
       console.log(JSON.stringify(config, null, 2));
     } else {
@@ -120,10 +115,10 @@ class ConfigCommand extends Command {
     debug(`Load config from ${this.daraConfigFile}`);
   }
 
-  delete(key) {
-    const config = this.loadConfig();
+  async delete(key) {
+    const config = await getDaraConfig(this.daraConfigFile);
     delete config[key];
-    this.saveConfig(config);
+    await this.saveConfig(config);
     console.log();
     console.log(chalk.green('Delete successfully!'));
     console.log();

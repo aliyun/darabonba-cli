@@ -92,7 +92,7 @@ class PublishCommand extends Command {
       file: fileInfo
     });
     debug(`Use ${this.options.c} as config file`);
-    const client = newRepoClient(this.options.c);
+    const client = await newRepoClient(this.options.c);
     let data = await client.publishModule(moduleInfo);
     if (data.ok) {
       console.log();

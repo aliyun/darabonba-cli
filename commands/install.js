@@ -9,17 +9,9 @@ const httpx = require('httpx');
 const chalk = require('chalk');
 const { DownloadModuleObject } = require('@darabonba/repo-client');
 
-const { newRepoClient } = require('../lib/util');
-const { PKG_FILE, INSTALL_PATH, DARA_CONFIG_FILE } = require('../lib/constants');
+const { newRepoClient, getDaraConfig } = require('../lib/util');
+const { PKG_FILE, INSTALL_PATH } = require('../lib/constants');
 const Command = require('../lib/command');
-
-function isOverseas() {
-  if (!fs.existsSync(DARA_CONFIG_FILE)) {
-    return '';
-  }
-  let config = JSON.parse(fs.readFileSync(DARA_CONFIG_FILE, { encoding: 'utf8' }));
-  return config.overseas || false;
-}
 
 function downloadAndCheckShasum(upstream, downstream) {
   let onEnd, onError, cleanUp;
@@ -63,7 +55,8 @@ async function downloadModules(ctx, rootDir, downloadList) {
       continue;
     }
     let distTarball = moduleInfo.dist_tarball;
-    if (isOverseas()) {
+    const config = await getDaraConfig();
+    if (config.overseas) {
       distTarball = distTarball.replace('oss-cn-zhangjiakou', 'oss-accelerate');
     }
     const res = await httpx.request(distTarball);
@@ -162,7 +155,7 @@ async function getDownloadList(installArr) {
   let downloadInfo = new DownloadModuleObject({
     specs: installArr.join(',')
   });
-  const repo = newRepoClient();
+  const repo = await newRepoClient();
   let data = await repo.downloadModule(downloadInfo);
   if (data.ok) {
     let downloadList = data.download_list;

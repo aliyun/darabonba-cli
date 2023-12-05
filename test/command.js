@@ -15,10 +15,10 @@ exports.dara = async (cmd, opts = {}) => {
   cmd = [dara].concat(cmd);
   opts.env = opts.env || process.env;
   opts.env['FORCE_COLOR'] = '1';
-  let execNode = opts.execNode || nodeBin;
-  let stdout = [];
-  let stderr = [];
-  let child = spawn(execNode, cmd, opts);
+  const execNode = opts.execNode || nodeBin;
+  const stdout = [];
+  const stderr = [];
+  const child = spawn(execNode, cmd, opts);
   if (child.stderr) {
     child.stderr.on('data', (chunk) => {
       stderr.push(chunk);
