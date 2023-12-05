@@ -1,0 +1,9 @@
+{
+  "scope": "test",
+  "name": "pkg",
+  "version": "1.0.0",
+  "main": "test.dara",
+  "libraries": {
+    "Util": "darabonba:Util:*"
+  }
+}
