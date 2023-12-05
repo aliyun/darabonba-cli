@@ -52,7 +52,7 @@ class UnpublishCommand extends Command {
     }
     let [scope, moduleName, version] = moduleInfo;
     let data;
-    const repoClient = newRepoClient();
+    const repoClient = await newRepoClient();
     if (!version) {
       if (!options.force) {
         console.log();

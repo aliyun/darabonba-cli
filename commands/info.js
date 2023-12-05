@@ -46,7 +46,7 @@ class InfoCommand extends Command {
   }
 
   async getModuleInfo(scope, moduleName, version) {
-    const repoClient = newRepoClient();
+    const repoClient = await newRepoClient();
     const data = await repoClient.getModuleInfo(scope, moduleName, version);
     if (data.ok && data.moduleInfo.darafile) {
       const { moduleInfo } = data;
