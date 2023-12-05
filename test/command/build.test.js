@@ -16,8 +16,10 @@ describe('build command should ok', function () {
   const outputFileActual_1 = path.join(__dirname, '../output/build/output_1.json');
 
   it('build with no arguments should log usage', async function () {
-    const { code, stdout } = await command.dara(['build']);
+    const { code, stdout, stderr } = await command.dara(['build']);
     const usageLog = await readFile(path.join(__dirname, '../fixture/build/usageLog'), 'utf8');
+    console.log(stdout);
+    console.log(stderr);
     assert.deepStrictEqual(code, 255);
     assert.deepStrictEqual(stdout, usageLog);
   });
