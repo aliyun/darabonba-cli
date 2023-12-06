@@ -42,4 +42,4 @@ const groups = [
 ];
 
 const app = new CommandsApplication(groups);
-app.run();
+app.run(process.argv.slice(2));

@@ -6,7 +6,7 @@
     "dara": "./bin/dara.js"
   },
   "scripts": {
-    "test": "mocha -b -t 10000 -R spec test/**/*.test.js",
+    "test": "mocha -b -t 10000 -R spec test/**/*.test.js test/*.test.js",
     "test-local": "mocha -t 10000 -R spec",
     "test-local-cov": "nyc -r=html -r=text -r=lcov npm run test-local",
     "test-cov": "nyc -r=html -r=text -r=lcov npm run test",
