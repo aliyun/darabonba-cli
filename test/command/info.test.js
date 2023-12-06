@@ -23,6 +23,18 @@ ${chalk.yellow('Usage:')}
 `);
   });
 
+  it('info -h should be ok', async function () {
+    const { code, stdout } = await command.dara(['info', '-h']);
+    assert.deepStrictEqual(code, 0);
+    assert.deepStrictEqual(stdout, `
+${chalk.yellow('Usage:')}
+
+    dara info <scope:moduleName>
+    dara info <scope:moduleName:version>
+
+`);
+  });
+
   it('info a dara package should be ok', async function () {
     const { code, stdout } = await command.dara(['info', 'darabonba:Util']);
     assert.deepStrictEqual(code, 0);
@@ -38,5 +50,11 @@ maintainers:
 - ${chalk.cyan('darabonba')}
 
 `);
+  });
+
+  it('info invalid package should be ok', async function () {
+    const { code, stdout } = await command.dara(['info', 'invalid:invalid']);
+    assert.deepStrictEqual(code, 1);
+    assert.deepStrictEqual(stdout, `${chalk.red(`the module invalid:invalid@latest isn't exists`)}\n`);
   });
 });

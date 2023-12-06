@@ -44,12 +44,7 @@ class PackCommand extends Command {
       this.process.exit(-1);
     }
 
-    pack(pkg, rootDir).catch((err) => {
-      console.log();
-      console.log(chalk.red(err.stack));
-      console.log();
-      process.exit(-1);
-    });
+    await pack(pkg, rootDir);
   }
 
   usage() {

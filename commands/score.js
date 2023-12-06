@@ -32,15 +32,6 @@ class ScoreCommand extends Command {
   }
 
   async exec() {
-    this.getScore().catch((err) => {
-      console.log();
-      console.log(chalk.red(err.stack));
-      console.log();
-      process.exit(-1);
-    });
-  }
-
-  async getScore() {
     const pkgDir = process.cwd();
     const pkgFilePath = path.join(pkgDir, PKG_FILE);
     if (!fs.existsSync(pkgFilePath)) {
