@@ -64,7 +64,7 @@ class LoginCommand extends Command {
       email: obj['email'],
       password: obj['password']
     });
-    const repoClient = await newRepoClient();
+    const repoClient = await newRepoClient(this.options.c);
     let data = await repoClient.userLogin(user);
     if (data.ok) {
       obj['authToken'] = data.rev;

@@ -7,6 +7,7 @@ const Command = require('../lib/command');
 const {
   newRepoClient,
 } = require('../lib/util.js');
+const { DARA_CONFIG_FILE } = require('../lib/constants.js');
 
 class InfoCommand extends Command {
   constructor() {
@@ -21,7 +22,15 @@ class InfoCommand extends Command {
           desc: 'dara scope or module'
         },
       ],
-      options: [],
+      options: [
+        {
+          name: 'configurePath',
+          short: 'c',
+          mode: 'optional',
+          desc: 'configure file path',
+          default: DARA_CONFIG_FILE
+        }
+      ],
     });
   }
 
@@ -46,7 +55,7 @@ class InfoCommand extends Command {
   }
 
   async getModuleInfo(scope, moduleName, version) {
-    const repoClient = await newRepoClient();
+    const repoClient = await newRepoClient(this.options.c);
     const data = await repoClient.getModuleInfo(scope, moduleName, version);
     if (data.ok && data.moduleInfo.darafile) {
       const { moduleInfo } = data;
