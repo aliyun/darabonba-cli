@@ -10,7 +10,7 @@ const chalk = require('chalk');
 const { DownloadModuleObject } = require('@darabonba/repo-client');
 
 const { newRepoClient, getDaraConfig } = require('../lib/util');
-const { PKG_FILE, INSTALL_PATH } = require('../lib/constants');
+const { PKG_FILE } = require('../lib/constants');
 const Command = require('../lib/command');
 
 function downloadAndCheckShasum(upstream, downstream) {
@@ -61,7 +61,7 @@ async function downloadModules(ctx, rootDir, downloadList) {
     }
     const res = await httpx.request(distTarball);
     // windows can't support ':' in file path
-    let targetDir = path.join(rootDir, INSTALL_PATH, moduleInfo.dist_dir.replace(/:/g, '_'));
+    let targetDir = path.join(rootDir, 'libraries', moduleInfo.dist_dir.replace(/:/g, '_'));
     ctx.librariesMap[moduleInfo.version] = path.relative(rootDir, targetDir);
     if (!fs.existsSync(targetDir)) {
       fs.mkdirSync(targetDir, {
