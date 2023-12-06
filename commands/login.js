@@ -32,8 +32,8 @@ class LoginCommand extends Command {
     });
   }
 
-  async login() {
-    const obj = await getDaraConfig(this.daraConfigFile);
+  async exec(args, options) {
+    const obj = await getDaraConfig(options.c);
 
     if (obj['password']) {
       obj['password'] = aesDecrypt(obj['password']);
@@ -69,21 +69,11 @@ class LoginCommand extends Command {
     if (data.ok) {
       obj['authToken'] = data.rev;
       obj['password'] = aesEncrypt(obj['password']);
-      await saveDaraConfig(obj, this.daraConfigFile);
+      await saveDaraConfig(obj, options.c);
       console.log();
       console.log(chalk.green('Login Successfully!'));
       console.log();
     }
-  }
-
-  async exec(args, options) {
-    this.daraConfigFile = options.c;
-    this.login().catch((err) => {
-      console.log();
-      console.log(chalk.red(err.stack));
-      console.log();
-      process.exit(-1);
-    });
   }
 
   usage() {

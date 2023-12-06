@@ -39,15 +39,6 @@ class PublishCommand extends Command {
   }
 
   async exec() {
-    this.publish().catch((err) => {
-      console.log();
-      console.log(chalk.red(err.stack));
-      console.log();
-      process.exit(-1);
-    });
-  }
-
-  async publish() {
     const pkgDir = process.cwd();
     const pkgFilePath = path.join(pkgDir, PKG_FILE);
     // Check the Darafile
