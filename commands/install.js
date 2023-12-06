@@ -10,8 +10,9 @@ const chalk = require('chalk');
 const { DownloadModuleObject } = require('@darabonba/repo-client');
 
 const { newRepoClient, getDaraConfig } = require('../lib/util');
-const { PKG_FILE, DARA_CONFIG_FILE } = require('../lib/constants');
+const { DARA_CONFIG_FILE } = require('../lib/constants');
 const Command = require('../lib/command');
+const { isDaraProject, getPackageInfo, savePackageInfo } = require('../lib/darafile');
 
 function downloadAndCheckShasum(upstream, downstream) {
   let onEnd, onError, cleanUp;
@@ -108,16 +109,14 @@ async function checkInstall(ctx, libs, aliasId, pwd) {
 }
 
 async function getLibsFromTeaFile(ctx, pwd) {
-  const pkgPath = fs.existsSync(path.join(pwd, 'Darafile')) ? path.join(pwd, 'Darafile') : path.join(pwd,'Teafile');
-  if (!fs.existsSync(pkgPath)) {
+  const pkg = await getPackageInfo(pwd);
+  if (!pkg) {
     return [];
   }
 
-  const pkgContent = fs.readFileSync(pkgPath, 'utf8');
-  const pkg = JSON.parse(pkgContent);
   const libraries = pkg.libraries || {};
   const aliasIds = Object.keys(libraries);
-  console.log(chalk.blue(`${pkgPath} found ${aliasIds.length} libraries`));
+  console.log(chalk.blue(`found ${aliasIds.length} libraries from ${pwd}`));
   let installArr = [];
   aliasIds.forEach((aliasId) => {
     if (!aliasId) {
@@ -221,8 +220,7 @@ class InstallCommand extends Command {
 
   async exec(args, options, argv) {
     const rootDir = process.cwd();
-    let pkgPath = path.join(rootDir, PKG_FILE);
-    if (!fs.existsSync(pkgPath)) {
+    if (!await isDaraProject(rootDir)) {
       console.log();
       console.log(chalk.red(`This folder is not a Darabonba package project(No Darafile exist)`));
       console.log();
@@ -259,11 +257,11 @@ class InstallCommand extends Command {
           }
           moduleName = name;
         }
-        const pkgContent = fs.readFileSync(pkgPath, 'utf8');
-        let pkg = JSON.parse(pkgContent);
+
+        let pkg = await getPackageInfo(rootDir);
         pkg.libraries = pkg.libraries || {};
         pkg.libraries[moduleName] = argv[0];
-        fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
+        await savePackageInfo(rootDir, pkg);
       }
       console.log(chalk.blue(`1 libraries installed.`));
       process.exit(0);

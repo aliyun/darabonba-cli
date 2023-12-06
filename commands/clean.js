@@ -6,7 +6,7 @@ const fs = require('fs');
 const chalk = require('chalk');
 const Command = require('../lib/command');
 const { delDir } = require('../lib/util');
-const { PKG_FILE } = require('../lib/constants');
+const { isDaraProject } = require('../lib/darafile');
 
 class CleanCommand extends Command {
   constructor() {
@@ -18,7 +18,7 @@ class CleanCommand extends Command {
         {
           name: 'sourceDir',
           mode: 'optional',
-          desc: `${PKG_FILE} file dir path`,
+          desc: `the root folder of darabonba project`,
           default: process.cwd()
         }
       ],
@@ -29,8 +29,7 @@ class CleanCommand extends Command {
 
   async exec(args, options) {
     const sourceDir = args.sourceDir;
-    const pkgPath = path.join(sourceDir, PKG_FILE);
-    if (!fs.existsSync(pkgPath)) {
+    if (!await isDaraProject(sourceDir)) {
       console.log();
       console.log(chalk.red(`Not a Darabonba package folder`));
       console.log();

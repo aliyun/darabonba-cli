@@ -15,9 +15,9 @@ const { pack } = require('../lib/pack');
 const { newRepoClient } = require('../lib/util');
 const AstUtil = require('../lib/ast_util');
 const {
-  PKG_FILE,
   TEA_CONFIG_FILE
 } = require('../lib/constants');
+const { getPackageInfo } = require('../lib/darafile');
 
 class PublishCommand extends Command {
   constructor() {
@@ -40,15 +40,15 @@ class PublishCommand extends Command {
 
   async exec() {
     const pkgDir = process.cwd();
-    const pkgFilePath = path.join(pkgDir, PKG_FILE);
-    // Check the Darafile
-    if (!fs.existsSync(pkgFilePath)) {
+    const pkg = await getPackageInfo(pkgDir);
+    if (!pkg) {
       console.log();
-      console.log(chalk.red('The Darafile does not exist'));
+      console.log(chalk.red('It is not a Darabonba project'));
       console.log();
       process.exit(-1);
     }
-    const moduleAst = new AstUtil(pkgDir);
+
+    const moduleAst = new AstUtil(pkgDir, pkg);
     const { scope, name, version } = moduleAst.getPkg();
     if (!scope || !name || !version) {
       console.log();

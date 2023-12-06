@@ -1,16 +1,13 @@
 'use strict';
 
-const path = require('path');
-const fs = require('fs');
-
 const chalk = require('chalk');
 
 const Command = require('../lib/command');
 const AstUtil = require('../lib/ast_util');
 const {
-  PKG_FILE,
   DARA_CONFIG_FILE
 } = require('../lib/constants');
+const { getPackageInfo } = require('../lib/darafile');
 
 class ScoreCommand extends Command {
   constructor() {
@@ -33,14 +30,15 @@ class ScoreCommand extends Command {
 
   async exec() {
     const pkgDir = process.cwd();
-    const pkgFilePath = path.join(pkgDir, PKG_FILE);
-    if (!fs.existsSync(pkgFilePath)) {
+    const pkg = await getPackageInfo(pkgDir);
+    if (!pkg) {
       console.log();
       console.log(chalk.red(`This folder is not a Darabonba package project(No Darafile exist)`));
       console.log();
       process.exit(-1);
     }
-    const moduleAst = new AstUtil(pkgDir);
+
+    const moduleAst = new AstUtil(pkgDir, pkg);
     const { scope, name, version } = moduleAst.getPkg();
     if (!scope || !name || !version) {
       console.log();
@@ -49,6 +47,7 @@ class ScoreCommand extends Command {
       console.log();
       this.process.exit(-1);
     }
+
     const scoreResult = moduleAst.getScore();
     console.log();
     this.printScore('Total score:\t\t\t', scoreResult.total);
@@ -64,11 +63,13 @@ class ScoreCommand extends Command {
       process.stdout.write('\n\n APIs Annotation Detail\n');
       process.stdout.write(apiPrint);
     }
+
     let functionPrint = this.formatScoreReportTable(report.function, ['incomplete_functions', 'missing_items']);
     if (functionPrint) {
       process.stdout.write('\n\n Functions Annotation Detail\n');
       process.stdout.write(functionPrint);
     }
+
     let modelPrint = this.formatScoreReportTable(report.model, ['incomplete_models', 'missing_items']);
     if (modelPrint) {
       process.stdout.write('\n\n Models Annotation Detail\n');
