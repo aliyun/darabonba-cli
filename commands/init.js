@@ -7,7 +7,8 @@ const chalk = require('chalk');
 
 const { readline } = require('../lib/util');
 const Command = require('../lib/command');
-const { getDarafile, fixed } = require('../lib/helper');
+const { fixed } = require('../lib/helper');
+const { getPackageInfo, savePackageInfo } = require('../lib/darafile');
 
 class InitCommand extends Command {
   constructor() {
@@ -41,11 +42,10 @@ class InitCommand extends Command {
   }
 
   async exec(args, options) {
-    const pkgFilePath = getDarafile(options.sourceDir);
-    let obj = Object.create(null);
-    if (fs.existsSync(pkgFilePath)) {
-      var data = fs.readFileSync(pkgFilePath, 'utf8');
-      obj = JSON.parse(data);
+    let obj = await getPackageInfo(options.sourceDir);
+
+    if (!obj) {
+      obj = Object.create(null);
     }
 
     try {
@@ -64,7 +64,7 @@ class InitCommand extends Command {
       process.exit(-1);
     }
 
-    fs.writeFileSync(pkgFilePath, JSON.stringify(obj, null, '  '));
+    await savePackageInfo(options.sourceDir, obj);
 
     const mainFilePath = path.join(options.sourceDir, obj['main']);
     if (!fs.existsSync(mainFilePath)) {

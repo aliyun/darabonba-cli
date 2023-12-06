@@ -7,8 +7,9 @@ const chalk = require('chalk');
 const DSL = require('@darabonba/parser');
 
 const Command = require('../lib/command');
-const { getDarafile, isExecutable, supportedLang, fixed } = require('../lib/helper');
+const { isExecutable, supportedLang, fixed } = require('../lib/helper');
 const config = require('../lib/config');
+const { getPackageInfo } = require('../lib/darafile');
 
 const generatorNameMap = config.generatorNameMap;
 const generatorMap = {
@@ -111,9 +112,14 @@ class CodegenCommand extends Command {
     const sourceDir = args.sourceDir;
 
     const rootDir = sourceDir;
-    const pkgPath = getDarafile(rootDir);
-    const pkgContent = fs.readFileSync(pkgPath, 'utf8');
-    const pkg = JSON.parse(pkgContent);
+    const pkg = await getPackageInfo(rootDir);
+
+    if (!pkg) {
+      console.log();
+      console.log(chalk.red(`It is not a Darabonba project`));
+      console.log();
+      process.exit(-1);
+    }
 
     if (pkg.mode === 'interface') {
       console.log();
