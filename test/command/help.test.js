@@ -4,8 +4,8 @@ const assert = require('assert');
 
 const command = require('../command');
 
-describe('helper command should ok', function () {
-  it('helper a dara file should be ok', async function () {
+describe('help command should ok', function () {
+  it('help a dara file should be ok', async function () {
     const { code, stdout } = await command.dara(['help']);
     assert.deepStrictEqual(code, 0);
     const version = require('../../package.json').version;
