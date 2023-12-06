@@ -6,6 +6,7 @@ const Command = require('../lib/command');
 const {
   newRepoClient,
 } = require('../lib/util.js');
+const { DARA_CONFIG_FILE } = require('../lib/constants.js');
 
 class UnpublishCommand extends Command {
   constructor() {
@@ -27,6 +28,13 @@ class UnpublishCommand extends Command {
           mode: 'optional',
           desc: 'delete the all module versions by this option',
           default: false
+        },
+        {
+          name: 'configurePath',
+          short: 'c',
+          mode: 'optional',
+          desc: 'configure file path',
+          default: DARA_CONFIG_FILE
         }
       ],
     });
@@ -52,7 +60,7 @@ class UnpublishCommand extends Command {
     }
     let [scope, moduleName, version] = moduleInfo;
     let data;
-    const repoClient = await newRepoClient();
+    const repoClient = await newRepoClient(options.c);
     if (!version) {
       if (!options.force) {
         console.log();

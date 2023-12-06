@@ -10,7 +10,7 @@ const chalk = require('chalk');
 const { DownloadModuleObject } = require('@darabonba/repo-client');
 
 const { newRepoClient, getDaraConfig } = require('../lib/util');
-const { PKG_FILE } = require('../lib/constants');
+const { PKG_FILE, DARA_CONFIG_FILE } = require('../lib/constants');
 const Command = require('../lib/command');
 
 function downloadAndCheckShasum(upstream, downstream) {
@@ -151,19 +151,19 @@ async function getLibsFromTeaFile(ctx, pwd) {
   return installArr;
 }
 
-async function getDownloadList(installArr) {
+async function getDownloadList(installArr, dararcPath) {
   let downloadInfo = new DownloadModuleObject({
     specs: installArr.join(',')
   });
-  const repo = await newRepoClient();
+  const repo = await newRepoClient(dararcPath);
   let data = await repo.downloadModule(downloadInfo);
   if (data.ok) {
     return data.download_list;
   }
 }
 
-async function installByLibs(ctx, rootDir, installArr) {
-  let downloadList = await getDownloadList(installArr);
+async function installByLibs(ctx, rootDir, installArr, dararcPath) {
+  let downloadList = await getDownloadList(installArr, dararcPath);
   let downloadModuleDirs = await downloadModules(ctx, rootDir, downloadList);
   if (!downloadModuleDirs.length) {
     return;
@@ -208,6 +208,13 @@ class InstallCommand extends Command {
           desc: 'Download module and update teafile',
           default: false
         },
+        {
+          name: 'configurePath',
+          short: 'c',
+          mode: 'optional',
+          desc: 'configure file path',
+          default: DARA_CONFIG_FILE
+        }
       ],
     });
   }
@@ -267,7 +274,7 @@ class InstallCommand extends Command {
       }
 
       const installArr = await getLibsFromTeaFile(ctx, rootDir);
-      await installByLibs(ctx, rootDir, installArr);
+      await installByLibs(ctx, rootDir, installArr, options.c);
       if (Object.keys(ctx.librariesMap).length > 0) {
         const lockPath = path.join(rootDir, '.libraries.json');
         fs.writeFileSync(lockPath, JSON.stringify(ctx.librariesMap, null, 2));
