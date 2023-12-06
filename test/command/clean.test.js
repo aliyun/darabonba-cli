@@ -12,6 +12,16 @@ const command = require('../command');
 
 describe('clean command should ok', function () {
 
+  it('clean usage should be ok', async function () {
+    const { code, stdout } = await command.dara(['clean', '-h']);
+    assert.deepStrictEqual(code, 0);
+    assert.deepStrictEqual(stdout, `\n\x1B[33mUsage:\x1B[39m
+
+    dara clean
+
+`);
+  });
+
   it('clean on non-darabonba package folder should be ok', async function () {
     const { code, stdout } = await command.dara(['clean']);
     assert.deepStrictEqual(code, 255);
