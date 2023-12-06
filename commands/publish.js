@@ -50,10 +50,10 @@ class PublishCommand extends Command {
   async publish() {
     const pkgDir = process.cwd();
     const pkgFilePath = path.join(pkgDir, PKG_FILE);
-    // Check the Teafile
+    // Check the Darafile
     if (!fs.existsSync(pkgFilePath)) {
       console.log();
-      console.log(chalk.red('The Teafile does not exist'));
+      console.log(chalk.red('The Darafile does not exist'));
       console.log();
       process.exit(-1);
     }
@@ -61,7 +61,7 @@ class PublishCommand extends Command {
     const { scope, name, version } = moduleAst.getPkg();
     if (!scope || !name || !version) {
       console.log();
-      console.log(chalk.red('The contents of the Teafile are incomplete.'));
+      console.log(chalk.red('The contents of the Darafile are incomplete.'));
       console.log(chalk.red('You can use `dara init` to initialize the file contents.'));
       console.log();
       this.process.exit(-1);
