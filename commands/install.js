@@ -158,8 +158,7 @@ async function getDownloadList(installArr) {
   const repo = await newRepoClient();
   let data = await repo.downloadModule(downloadInfo);
   if (data.ok) {
-    let downloadList = data.download_list;
-    return downloadList;
+    return data.download_list;
   }
 }
 

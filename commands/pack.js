@@ -28,7 +28,7 @@ class PackCommand extends Command {
     const pkgFilePath = path.join(rootDir, PKG_FILE);
     if (!fs.existsSync(pkgFilePath)) {
       console.log();
-      console.log(chalk.red('The Teafile does not exist'));
+      console.log(chalk.red('The Darafile does not exist'));
       console.log();
       process.exit(-1);
     }
