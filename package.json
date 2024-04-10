@@ -39,7 +39,7 @@
     "minimatch": "^3.0.4",
     "minimist": "^1.2.0",
     "read": "^1.0.7",
-    "tar": "^4.4.10"
+    "tar": "^6.2.1"
   },
   "devDependencies": {
     "eslint": "^8",
