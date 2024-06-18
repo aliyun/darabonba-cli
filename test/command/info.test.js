@@ -38,13 +38,13 @@ ${chalk.yellow('Usage:')}
   it('info a dara package should be ok', async function () {
     const { code, stdout } = await command.dara(['info', 'darabonba:Util']);
     assert.deepStrictEqual(code, 0);
-    assert.deepStrictEqual(stdout, `${chalk.green(`darabonba:Util@0.2.11`)} info:
+    assert.deepStrictEqual(stdout, `${chalk.green(`darabonba:Util@0.2.13`)} info:
 
 main: ${chalk.yellow(`./main.tea`)}
 
 dist:
-.tarball: ${chalk.blue('https://darabonba-module-prod.oss-cn-zhangjiakou.aliyuncs.com/darabonba/Util-0.2.11.tar.gz')}
-.shasum:  ${chalk.blue('8fa8336f65e3107a2af613114389f34474a840ba')}
+.tarball: ${chalk.blue('https://darabonba-module-prod.oss-cn-zhangjiakou.aliyuncs.com/darabonba/Util-0.2.13.tar.gz')}
+.shasum:  ${chalk.blue('1ef7e0b0b465a7e87fbeb9c777958967804e0182')}
 
 maintainers:
 - ${chalk.cyan('darabonba')}
