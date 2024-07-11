@@ -2,11 +2,14 @@
 
 const path = require('path');
 const fs = require('fs');
+const util = require('util');
 
 const chalk = require('chalk');
+
 const Command = require('../lib/command');
-const { delDir } = require('../lib/util');
 const { isDaraProject } = require('../lib/darafile');
+
+const rmdirAsync = util.promisify(fs.rm);
 
 class CleanCommand extends Command {
   constructor() {
@@ -37,7 +40,9 @@ class CleanCommand extends Command {
     }
 
     const libPath = path.join(sourceDir, 'libraries');
-    delDir(libPath);
+    await rmdirAsync(libPath, {
+      recursive: true
+    });
     console.log();
     console.log(chalk.green(`Clean ${libPath} success!`));
     console.log();
