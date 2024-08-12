@@ -42,7 +42,7 @@
     "tar": "^4.4.10"
   },
   "devDependencies": {
-    "eslint": "^8",
+    "eslint": "^9",
     "mocha": "^10",
     "nyc": "^14.1.1"
   },
