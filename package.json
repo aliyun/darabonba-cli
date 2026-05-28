@@ -23,7 +23,7 @@
     "@darabonba/cpp-generator": "^2.0.0-beta.13",
     "@darabonba/csharp-generator": "^2",
     "@darabonba/go-generator": "^2",
-    "@darabonba/java-async-generator": "^1",
+    "@darabonba/java-async-generator": "^2",
     "@darabonba/java-generator": "^1",
     "@darabonba/parser": "^2",
     "@darabonba/php-generator": "^2",
